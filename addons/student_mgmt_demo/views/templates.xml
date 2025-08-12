@@ -1,0 +1,57 @@
+<odoo>
+  <template id="student_form" name="Student Public Form">
+    <t t-call="website.layout">
+      <div class="container">
+        <h1>Student Registration</h1>
+        <form action="/student/submit" method="post">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" name="name" required="required" class="form-control"/>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" class="form-control"/>
+          </div>
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="text" name="phone" class="form-control"/>
+          </div>
+          <div class="form-group">
+            <label>DOB</label>
+            <input type="date" name="dob" class="form-control"/>
+          </div>
+          <div class="form-group">
+            <label>Notes</label>
+            <textarea name="notes" class="form-control"></textarea>
+          </div>
+          <button class="btn btn-primary" type="submit">Submit</button>
+        </form>
+      </div>
+    </t>
+  </template>
+
+  <template id="thanks" name="Thank you page">
+    <t t-call="website.layout">
+      <div class="container">
+        <h2>Thanks! Your record was submitted.</h2>
+        <p>Reference: <t t-esc="rec.sequence"/></p>
+        <a href="/">Back to Home</a>
+      </div>
+    </t>
+  </template>
+
+  <template id="student_list" name="Student List">
+    <t t-call="website.layout">
+      <div class="container">
+        <h2>All Students</h2>
+        <ul>
+          <t t-foreach="students" t-as="s">
+            <li>
+              <t t-esc="s.sequence"/> - <t t-esc="s.name"/> (<t t-esc="s.state"/>)
+            </li>
+          </t>
+        </ul>
+      </div>
+    </t>
+  </template>
+</odoo>

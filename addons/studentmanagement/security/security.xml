@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
-  <!-- Define a group for school managers (optional) -->
-  <record id="group_school_manager" model="res.groups">
-    <field name="name">School / Student Manager</field>
-    <field name="category_id" ref="base.module_category_hidden"/>
-  </record>
-</odoo>
