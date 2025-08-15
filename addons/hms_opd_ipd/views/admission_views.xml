@@ -1,0 +1,89 @@
+<odoo>
+    <!-- List View -->
+    <record id="view_hms_admission_list" model="ir.ui.view">
+        <field name="name">hms.admission.list</field>
+        <field name="model">hms.admission</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="admission_type"/>
+                <!-- Hide bed_no for OPD -->
+                <field name="bed_no" invisible="admission_type == 'opd'"/>
+                <field name="admission_date"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'discharged'"
+                       decoration-danger="state == 'canceled'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_hms_admission_form" model="ir.ui.view">
+        <field name="name">hms.admission.form</field>
+        <field name="model">hms.admission</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,admitted,discharged,canceled"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="patient_id"/>
+                        <field name="doctor_id"/>
+                        <field name="admission_type"/>
+                        <!-- Hide bed_no for OPD -->
+                        <field name="bed_no" invisible="admission_type == 'opd'"/>
+                        <field name="admission_date"/>
+                        <!-- Hide discharge_date unless state is discharged -->
+                        <field name="discharge_date" readonly="1" invisible="state != 'discharged'"/>
+                    </group>
+                    <group>
+                        <field name="notes"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_admit" string="Admit" type="object" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_discharge" string="Discharge" type="object" class="btn-primary"
+                            invisible="state != 'admitted'"/>
+                    <button name="action_cancel" string="Cancel" type="object" class="btn-secondary"
+                            invisible="state in ['discharged', 'canceled']"/>
+                    <button name="action_reset_to_draft" string="Reset to Draft" type="object" class="btn-secondary"
+                            invisible="state != 'canceled'"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- All Admissions -->
+    <record id="action_hms_admission_all" model="ir.actions.act_window">
+        <field name="name">All Admissions</field>
+        <field name="res_model">hms.admission</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- OPD Only -->
+    <record id="action_hms_admission_opd" model="ir.actions.act_window">
+        <field name="name">OPD Admissions</field>
+        <field name="res_model">hms.admission</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('admission_type','=','opd')]</field>
+    </record>
+
+    <!-- IPD Only -->
+    <record id="action_hms_admission_ipd" model="ir.actions.act_window">
+        <field name="name">IPD Admissions</field>
+        <field name="res_model">hms.admission</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('admission_type','=','ipd')]</field>
+    </record>
+
+    <!-- Main Admissions Menu -->
+    <menuitem id="menu_hms_admission_root" name="Admissions" parent="hms_base.menu_hms_base_root" sequence="30"/>
+    <menuitem id="menu_hms_admission_all" name="All" parent="menu_hms_admission_root" action="action_hms_admission_all"/>
+    <menuitem id="menu_hms_admission_opd" name="OPD" parent="menu_hms_admission_root" action="action_hms_admission_opd"/>
+    <menuitem id="menu_hms_admission_ipd" name="IPD" parent="menu_hms_admission_root" action="action_hms_admission_ipd"/>
+
+</odoo>
