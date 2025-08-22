@@ -1,0 +1,34 @@
+<odoo>
+    <!-- Extend the standard invoice report to include FBR info and QR -->
+    <template id="report_invoice_document_fbr" inherit_id="account.report_invoice_document">
+        <!-- Robust target: inject inside the report page container -->
+        <xpath expr="//div[hasclass('page')]" position="inside">
+            <!-- Build a mapping from selection value -> label (safe for QWeb) -->
+            <t t-set="status_map" t-value="o._fields['fbr_state']._description_selection(o.env)"/>
+
+            <div class="row" t-if="o.fbr_invoice_number or o.fbr_qr_code" style="margin-top: 8px;">
+                <div class="col-6">
+                    <p t-if="o.fbr_invoice_number">
+                        <strong>FBR Invoice No:</strong> <t t-esc="o.fbr_invoice_number"/>
+                    </p>
+                    <p t-if="o.fbr_irn">
+                        <strong>FBR IRN/UUID:</strong> <t t-esc="o.fbr_irn"/>
+                    </p>
+                    <p t-if="o.fbr_submission_date">
+                        <strong>FBR Submitted:</strong> <t t-esc="format_datetime(o.fbr_submission_date)"/>
+                    </p>
+                    <p t-if="o.fbr_state">
+                        <strong>FBR Status:</strong>
+                        <t t-esc="(status_map.get(o.fbr_state) or o.fbr_state)"/>
+                    </p>
+                </div>
+
+                <div class="col-6" t-if="o.fbr_qr_code">
+                    <!-- Use web/image route: works whether field is bytes or base64 string -->
+                    <img t-att-src="'/web/image/%s/%s/fbr_qr_code' % (o._name, o.id)"
+                         style="max-height:150px; max-width:150px; float:right;"/>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

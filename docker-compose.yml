@@ -3,6 +3,7 @@ services:
     image: odoo:latest
     depends_on:
       - db
+      - fbr_mock          # 👈 add this so mock up ho pehle
     restart: always
     ports:
       - "8069:8069"
@@ -15,6 +16,7 @@ services:
       - HOST=db
       - USER=odoo
       - PASSWORD=root  # match this with the db password
+
   db:
     image: postgres:latest
     environment:
@@ -25,6 +27,24 @@ services:
     restart: always
     volumes:
       - odoo-db-data:/var/lib/postgresql/data/pgdata
+
+  fbr_mock:              # 👈 NEW
+    image: python:3.11-slim
+    working_dir: /app
+    volumes:
+      - ./fbr_mock_server:/app
+    # simple bootstrap: install deps then run
+    command: sh -c "pip install -r requirements.txt && python app.py"
+    ports:
+      - "8000:8000"      # optional (host se bhi dekh sakte ho)
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "python - <<'PY'\nimport requests,sys; \nimport os\nimport json\nimport time\nurl='http://localhost:8000/auth/token'\ntry:\n r=requests.post(url,json={'client_id':'x','client_secret':'y','grant_type':'client_credentials'},timeout=2)\n sys.exit(0 if r.status_code==200 else 1)\nexcept Exception:\n sys.exit(1)\nPY"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
+
 volumes:
   odoo-web-data:
   odoo-db-data:
