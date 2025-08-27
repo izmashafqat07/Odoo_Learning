@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="view_res_config_settings_fbr_mock" model="ir.ui.view">
-        <field name="name">res.config.settings.view.form.fbr.mock</field>
-        <field name="model">res.config.settings</field>
-        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
-        <field name="arch" type="xml">
-            <xpath expr="//form" position="inside">
-                <div class="app_settings_block" data-string="FBR Mock" string="FBR Mock">
-                    <h2>FBR Mock Integration</h2>
-                    <div class="row mt16">
-                        <div class="col-12 col-lg-6">
-                            <label for="fbr_mock_base_url"/>
-                            <field name="fbr_mock_base_url"/>
-                            <div class="text-muted">Base URL of the local mock server.</div>
-                        </div>
-                        <div class="col-12 col-lg-6">
-                            <label for="fbr_mock_bearer_token"/>
-                            <field name="fbr_mock_bearer_token"/>
-                            <div class="text-muted">Optional: set if your mock checks Authorization header.</div>
-                        </div>
-                    </div>
-                </div>
-            </xpath>
-        </field>
-    </record>
+  <record id="view_res_config_settings_fbr_mock" model="ir.ui.view">
+    <field name="name">res.config.settings.view.form.fbr.mock</field>
+    <field name="model">res.config.settings</field>
+    <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//form" position="inside">
+        <div class="app_settings_block" data-string="FBR Mock" string="FBR Mock">
+          <h2>FBR Mock Integration</h2>
+          <div class="row mt16">
+            <div class="col-12 col-lg-6">
+              <label for="fbr_mock_base_url"/>
+              <field name="fbr_mock_base_url"/>
+              <div class="text-muted">Base URL of the local mock server.</div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <label for="fbr_mock_bearer_token"/>
+              <field name="fbr_mock_bearer_token"/>
+              <div class="text-muted">Optional: set if your mock checks Authorization header.</div>
+            </div>
+          </div>
+        </div>
+      </xpath>
+    </field>
+  </record>
 </odoo>

@@ -1,35 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Main FBR Mock menu -->
-    <menuitem id="menu_fbr_mock_root"
-              name="FBR Mock"
-              sequence="100"/>
-    
-    <!-- Configuration menu -->
-    <menuitem id="menu_fbr_mock_configuration"
-              name="Configuration"
-              parent="menu_fbr_mock_root"
-              sequence="10"/>
-    
-    <!-- Settings menu item - using window action -->
-    <record id="action_fbr_mock_config" model="ir.actions.act_window">
-        <field name="name">FBR Mock Settings</field>
-        <field name="res_model">res.config.settings</field>
-        <field name="view_mode">form</field>
-        <field name="target">inline</field>
-        <field name="context">{'module': 'fbr_mock_integration'}</field>
-    </record>
-    
-    <menuitem id="menu_fbr_mock_settings"
-              name="Settings"
-              parent="menu_fbr_mock_configuration"
-              action="action_fbr_mock_config"
-              sequence="10"/>
-    
-    <!-- Invoices menu -->
-    <menuitem id="menu_fbr_mock_invoices"
-              name="Customer Invoices"
-              parent="menu_fbr_mock_root"
-              action="account.action_move_out_invoice_type"
-              sequence="20"/>
+  <!-- Root: FBR Mock -->
+  <menuitem id="menu_fbr_mock_root"
+            name="FBR Mock"
+            sequence="100"/>
+
+  <!-- Submenu: Configuration -->
+  <menuitem id="menu_fbr_mock_configuration"
+            name="Configuration"
+            parent="menu_fbr_mock_root"
+            sequence="10"/>
+
+  <!-- Action: Open Settings (ResConfigSettings) -->
+  <record id="action_fbr_mock_config" model="ir.actions.act_window">
+    <field name="name">FBR Mock Settings</field>
+    <field name="res_model">res.config.settings</field>
+    <field name="view_mode">form</field>
+    <field name="target">inline</field>
+    <field name="context">{'module': 'fbr_mock_integration'}</field>
+  </record>
+
+  <!-- Menu: Settings (opens the action above) -->
+  <menuitem id="menu_fbr_mock_settings"
+            name="Settings"
+            parent="menu_fbr_mock_configuration"
+            action="action_fbr_mock_config"
+            sequence="10"/>
+
+  <!-- Quick access: Customer Invoices -->
+  <menuitem id="menu_fbr_mock_invoices"
+            name="Customer Invoices"
+            parent="menu_fbr_mock_root"
+            action="account.action_move_out_invoice_type"
+            sequence="20"/>
 </odoo>
