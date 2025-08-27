@@ -1,4 +1,4 @@
-# /home/$USER/src/tutorials/estate/models/estate_property.py
+# -*- coding: utf-8 -*-
 from odoo import models, fields
 from dateutil.relativedelta import relativedelta
 
@@ -7,7 +7,7 @@ class EstateProperty(models.Model):
     _description = "Real Estate Property"
 
     # Reserved fields
-    active = fields.Boolean(default=True)  # hide inactive in searches; default True so it doesn’t disappear
+    active = fields.Boolean(default=True)
     state = fields.Selection(
         [
             ("new", "New"),
@@ -22,7 +22,7 @@ class EstateProperty(models.Model):
         default="new",
     )
 
-    # Basic fields (simple types)
+    # Basic fields
     name = fields.Char(string="Title", required=True, index=True)
     description = fields.Text(string="Description")
     postcode = fields.Char(string="Postcode")
@@ -36,7 +36,7 @@ class EstateProperty(models.Model):
 
     expected_price = fields.Float(string="Expected Price", required=True)
 
-    # Read-only and not copied
+    # Not copied (read-only behavior can be handled in the view)
     selling_price = fields.Float(string="Selling Price", copy=False)
 
     bedrooms = fields.Integer(string="Bedrooms", default=2)
@@ -46,7 +46,6 @@ class EstateProperty(models.Model):
     garage = fields.Boolean(string="Garage")
     garden = fields.Boolean(string="Garden")
     garden_area = fields.Integer(string="Garden Area (sqm)")
-
     garden_orientation = fields.Selection(
         [
             ("north", "North"),
@@ -56,4 +55,41 @@ class EstateProperty(models.Model):
         ],
         string="Garden Orientation",
         help="Direction the garden faces.",
+    )
+
+    # -----------------------
+    # Chapter 7: Relations
+    # -----------------------
+
+    # Many2one: Property Type
+    property_type_id = fields.Many2one(
+        "estate.property.type",
+        string="Property Type",
+    )
+
+    # Many2many: Tags
+    tag_ids = fields.Many2many(
+        "estate.property.tag",
+        string="Tags",
+    )
+
+    # Many2one: Buyer (res.partner) - do not copy on duplicate
+    buyer_id = fields.Many2one(
+        "res.partner",
+        string="Buyer",
+        copy=False,
+    )
+
+    # Many2one: Salesperson (res.users) - default = current user
+    salesperson_id = fields.Many2one(
+        "res.users",
+        string="Salesperson",
+        default=lambda self: self.env.user.id,
+    )
+
+    # One2many: Offers (inverse of offer.property_id)
+    offer_ids = fields.One2many(
+        "estate.property.offer",
+        "property_id",
+        string="Offers",
     )
