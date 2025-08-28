@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_invoice_document_inherit_fbr_di" inherit_id="account.report_invoice_document">
+        <xpath expr="(//div[contains(concat(' ', normalize-space(@class), ' '), ' page ')])[last()]" position="inside">
+            <t t-if="o.fbr_qr_png">
+                <table style="margin-top:10px; border-collapse:collapse; border-spacing:0;">
+                    <tr>
+                        <td style="vertical-align:middle;">
+                            <img t-att-src="'/fbr_di_integration/static/img/fbr_di_logo.png'" alt="" style="height:1in; width:auto;"/>
+                        </td>
+                        <td style="vertical-align:middle; padding-left:6px;">
+                            <img t-att-src="image_data_uri(o.fbr_qr_png)" alt="" style="height:1in; width:1in;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align:center; padding-top:6px;">
+                            <div style="font-size:11px; line-height:1.2;">
+                                <strong>FBR Invoice Number:</strong>
+                                <t t-esc="o.fbr_invoice_number or '-'"/>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </t>
+        </xpath>
+    </template>
+</odoo>
