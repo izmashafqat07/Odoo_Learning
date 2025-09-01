@@ -15,6 +15,9 @@
                 <field name="selling_price"/>
                 <field name="bedrooms"/>
                 <field name="living_area"/>
+                <!-- NEW: total_area and best_price -->
+                <field name="total_area"/>
+                <field name="best_price"/>
                 <field name="state"/>
                 <field name="active"/>
             </list>
@@ -56,6 +59,8 @@
                             <group>
                                 <field name="bedrooms"/>
                                 <field name="living_area" string="Living Area (sqm)"/>
+                                <!-- NEW: total_area shown read-only -->
+                                <field name="total_area" string="Total Area (sqm)" readonly="1"/>
                                 <field name="facades"/>
                             </group>
 
@@ -75,16 +80,20 @@
                             <group>
                                 <field name="salesperson_id"/>
                                 <field name="buyer_id"/>
+                                <!-- NEW: best_price shown read-only -->
+                                <field name="best_price" string="Best Offer" readonly="1"/>
                             </group>
 
                             <!-- Offers grid (One2many) -->
                             <group string="Offers">
-                                <!-- context removed to avoid Odoo 18 validation error -->
                                 <field name="offer_ids">
                                     <list>
                                         <field name="price"/>
                                         <field name="partner_id"/>
                                         <field name="status"/>
+                                        <!-- NEW inside O2M list -->
+                                        <field name="validity"/>
+                                        <field name="date_deadline"/>
                                     </list>
                                 </field>
                             </group>
@@ -243,6 +252,9 @@
                 <field name="price"/>
                 <field name="partner_id"/>
                 <field name="status"/>
+                <!-- NEW -->
+                <field name="validity"/>
+                <field name="date_deadline"/>
             </list>
         </field>
     </record>
@@ -257,6 +269,9 @@
                         <field name="price" required="1"/>
                         <field name="partner_id" required="1"/>
                         <field name="status"/>
+                        <!-- NEW -->
+                        <field name="validity"/>
+                        <field name="date_deadline"/>
                     </group>
                 </sheet>
             </form>

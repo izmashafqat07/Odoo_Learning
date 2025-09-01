@@ -6,7 +6,7 @@
                 <table style="margin-top:10px; border-collapse:collapse; border-spacing:0;">
                     <tr>
                         <td style="vertical-align:middle;">
-                            <img t-att-src="'/fbr_di_integration/static/img/fbr_di_logo.png'" alt="" style="height:1in; width:auto;"/>
+                            <img t-att-src="'/fbr_fbr_integration/static/img/fbr_di_logo.png'" alt="" style="height:1in; width:auto;"/>
                         </td>
                         <td style="vertical-align:middle; padding-left:6px;">
                             <img t-att-src="image_data_uri(o.fbr_qr_png)" alt="" style="height:1in; width:1in;"/>

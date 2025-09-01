@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from odoo import models, fields
-from dateutil.relativedelta import relativedelta
+from odoo import models, fields, api
+from dateutil.relativedelta import relativedelta  # already used for date_availability
 
 class EstateProperty(models.Model):
     _name = "estate.property"
@@ -35,8 +35,6 @@ class EstateProperty(models.Model):
     )
 
     expected_price = fields.Float(string="Expected Price", required=True)
-
-    # Not copied (read-only behavior can be handled in the view)
     selling_price = fields.Float(string="Selling Price", copy=False)
 
     bedrooms = fields.Integer(string="Bedrooms", default=2)
@@ -57,39 +55,49 @@ class EstateProperty(models.Model):
         help="Direction the garden faces.",
     )
 
-    # -----------------------
+    # ---------- NEW: Computed fields ----------
+    total_area = fields.Integer(
+        string="Total Area (sqm)",
+        compute="_compute_total_area",
+        store=True,  # set to False if you don't want DB storage
+    )
+    best_price = fields.Float(
+        string="Best Offer",
+        compute="_compute_best_price",
+        store=True,  # set to False if you don't want DB storage
+    )
+
     # Chapter 7: Relations
-    # -----------------------
-
-    # Many2one: Property Type
-    property_type_id = fields.Many2one(
-        "estate.property.type",
-        string="Property Type",
-    )
-
-    # Many2many: Tags
-    tag_ids = fields.Many2many(
-        "estate.property.tag",
-        string="Tags",
-    )
-
-    # Many2one: Buyer (res.partner) - do not copy on duplicate
-    buyer_id = fields.Many2one(
-        "res.partner",
-        string="Buyer",
-        copy=False,
-    )
-
-    # Many2one: Salesperson (res.users) - default = current user
+    property_type_id = fields.Many2one("estate.property.type", string="Property Type")
+    tag_ids = fields.Many2many("estate.property.tag", string="Tags")
+    buyer_id = fields.Many2one("res.partner", string="Buyer", copy=False)
     salesperson_id = fields.Many2one(
-        "res.users",
-        string="Salesperson",
-        default=lambda self: self.env.user.id,
+        "res.users", string="Salesperson", default=lambda self: self.env.user.id
+    )
+    offer_ids = fields.One2many(
+        "estate.property.offer", "property_id", string="Offers"
     )
 
-    # One2many: Offers (inverse of offer.property_id)
-    offer_ids = fields.One2many(
-        "estate.property.offer",
-        "property_id",
-        string="Offers",
-    )
+    # ---------- NEW: Compute methods ----------
+    @api.depends("living_area", "garden_area")
+    def _compute_total_area(self):
+        for rec in self:
+            rec.total_area = (rec.living_area or 0) + (rec.garden_area or 0)
+
+    @api.depends("offer_ids.price")
+    def _compute_best_price(self):
+        for rec in self:
+            prices = rec.offer_ids.mapped("price")
+            rec.best_price = max(prices) if prices else 0.0
+
+    # ---------- NEW: Onchange ----------
+    @api.onchange("garden")
+    def _onchange_garden(self):
+        # Form-only helper: don't add business rules here
+        if self.garden:
+            if not self.garden_area:
+                self.garden_area = 10  # default suggestion
+            self.garden_orientation = "north"
+        else:
+            self.garden_area = 0
+            self.garden_orientation = False

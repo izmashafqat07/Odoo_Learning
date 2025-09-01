@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="product_template_form_fbr_extra_measures" model="ir.ui.view">
+    <field name="name">product.template.form.fbr.extra.measures</field>
+    <field name="model">product.template</field>
+    <field name="inherit_id" ref="product.product_template_only_form_view"/>
+    <field name="arch" type="xml">
+      <xpath expr="//page[@name='inventory']" position="inside">
+        <group string="Additional Measurements">
+          <group>
+            <field name="x_length_value"/>
+            <field name="x_length_uom_id"/>
+            <field name="x_area_value"/>
+            <field name="x_area_uom_id"/>
+          </group>
+          <group>
+            <field name="x_energy_value"/>
+            <field name="x_energy_uom_id"/>
+            <field name="x_power_value"/>
+            <field name="x_power_uom_id"/>
+          </group>
+          <group>
+            <field name="x_unit_uom_id"/>
+          </group>
+          <div class="text-muted">These fields behave like Weight/Volume defaults (custom usage).</div>
+        </group>
+      </xpath>
+    </field>
+  </record>
+</odoo>
