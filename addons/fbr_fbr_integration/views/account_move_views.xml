@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
-  <!-- Main form inheritance: button + badge + FBR page + inline lines tree -->
   <record id="fbr_di_view_move_form_inherit_final" model="ir.ui.view">
     <field name="name">account.move.form.fbr.di.final</field>
     <field name="model">account.move</field>
     <field name="inherit_id" ref="account.view_move_form"/>
     <field name="arch" type="xml">
-
-      <!-- Header button + badge (Odoo 17/18: use modifiers JSON) -->
+      <!-- Header button + existing badge -->
       <xpath expr="//header" position="inside">
         <button name="action_send_to_fbr"
                 type="object"
@@ -21,7 +18,7 @@
         />
       </xpath>
 
-      <!-- FBR page -->
+      <!-- FBR page (existing) -->
       <xpath expr="//sheet/notebook" position="inside">
         <page string="FBR Digital Invoicing">
           <group>
@@ -33,6 +30,11 @@
               <field name="fbr_invoice_number" readonly="1"/>
               <field name="fbr_sent_at" readonly="1"/>
             </group>
+            <group string="FBR Totals (Computed)">
+              <field name="amount_extra_tax" readonly="1"/>
+              <field name="amount_further_tax" readonly="1"/>
+              <field name="amount_total_with_all" readonly="1"/>
+            </group>
             <group string="Debug">
               <field name="fbr_request_payload" readonly="1" widget="text"/>
               <field name="fbr_last_response" readonly="1" widget="text"/>
@@ -40,13 +42,20 @@
               <field name="fbr_qr_png" readonly="1" widget="image"/>
             </group>
           </group>
-
-          
-
         </page>
+      </xpath>
+
+      <!-- Lines tree: show per-line extra/further (optional but useful) -->
+      <xpath expr="//field[@name='invoice_line_ids']/tree" position="attributes">
+        <attribute name="create">1</attribute>
+        <attribute name="editable">bottom</attribute>
+      </xpath>
+      <xpath expr="//field[@name='invoice_line_ids']/tree" position="inside">
+        <field name="fbr_extra_tax_amount" readonly="1"/>
+        <field name="fbr_further_tax_amount" readonly="1"/>
+        <field name="fbr_line_total_incl_all" readonly="1"/>
       </xpath>
 
     </field>
   </record>
-
 </odoo>

@@ -7,7 +7,7 @@ class ProductTemplate(models.Model):
     fbr_hs_code = fields.Char(
         string="FBR HS Code",
         help="e.g., 3303.0010 for perfumes, etc."
-    )
+    ) 
     fbr_rate_text = fields.Char(
         string="FBR Rate (text)",
         help="e.g., 18% per DI spec 'rate' string"
@@ -16,6 +16,7 @@ class ProductTemplate(models.Model):
         string="FBR UoM Text",
         default="Numbers, pieces, units"
     )
+    
     fbr_sale_type = fields.Selection(
         [
             ("standard", "Goods at standard rate (default)"),
