@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    "name": "FBR Digital Invoicing (PRAL) – Odoo 18",
+    "name": "Error wala module",
     "summary": (
         "Post customer invoices to FBR Digital Invoicing (PRAL): "
         "postinvoicedata with GST details, QR, and manual tax override."
@@ -14,7 +14,6 @@
         "base_setup",   # needed for inheriting General Settings form
         "product",
         "account",
-        "uom",
     ],
     "data": [
         "security/ir.model.access.csv",
@@ -26,15 +25,12 @@
         # Product UIs
         "views/product_template_views.xml",              # your existing FBR page
         "views/product_template_views_extra_measures.xml",  # NEW inventory block
-
+        "views/account_move_line_list.xml",
         # Accounting UI
         "views/account_move_views.xml",
 
         # Reports
         "views/report_invoice_fbr.xml",
-
-        # data
-        "data/uom_data.xml",
     ],
     "external_dependencies": {
         "python": [
@@ -43,7 +39,7 @@
             "Pillow",
         ],
     },
-    # "post_init_hook": "post_init_set_fbr_uoms",   # seed FBR UoMs + codes
+    "post_init_hook": "post_init_set_fbr_uoms",   # seed FBR UoMs + codes
     "application": True,
     "installable": True,
 }

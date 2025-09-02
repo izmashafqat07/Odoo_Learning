@@ -22,44 +22,44 @@
             </group>
           </group>
 
-          <!-- <separator string="Additional Units of Measure"/> -->
+          <separator string="Additional Units of Measure"/>
 
           <!-- ===== BELOW: Additional Units of Measure ===== -->
-          <!-- <group string="Additional UoM Defaults"> -->
+          <group string="Additional UoM Defaults">
             <!-- Row 1: Length | Area -->
-            <!-- <group>
+            <group>
               <group string="Length">
                 <field name="length_uom_choice" widget="radio" nolabel="1"/>
               </group>
               <group string="Area">
                 <field name="area_uom_choice" widget="radio" nolabel="1"/>
               </group>
-            </group> -->
+            </group>
 
             <!-- Row 2: Energy | Power -->
-            <!-- <group>
+            <group>
               <group string="Energy">
                 <field name="energy_uom_choice" widget="radio" nolabel="1"/>
               </group>
               <group string="Power">
                 <field name="power_uom_choice" widget="radio" nolabel="1"/>
               </group>
-            </group> -->
+            </group>
 
             <!-- Row 3: Counting Units (full width) -->
-            <!-- <group>
+            <group>
               <group string="Counting Units" colspan="2">
                 <field name="unit_uom_choice" widget="radio" nolabel="1"/>
               </group>
-            </group> -->
+            </group>
 
             <!-- hidden company M2O fields -->
-            <!-- <field name="length_uom_id" invisible="1"/>
+            <field name="length_uom_id" invisible="1"/>
             <field name="area_uom_id"   invisible="1"/>
             <field name="energy_uom_id" invisible="1"/>
             <field name="power_uom_id"  invisible="1"/>
             <field name="unit_uom_id"   invisible="1"/>
-          </group> -->
+          </group>
 
         </sheet>
         <footer>

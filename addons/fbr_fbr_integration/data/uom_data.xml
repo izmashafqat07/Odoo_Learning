@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <!-- New Categories -->
+    <record id="uom_category_energy" model="uom.category">
+        <field name="name">Energy</field>
+    </record>
+    <record id="uom_category_power" model="uom.category">
+        <field name="name">Power</field>
+    </record>
+
+    <!-- Update Existing Units with FBR Codes -->
+    <record id="uom.product_uom_kgm" model="uom.uom">
+        <field name="fbr_code">U1000063</field>
+    </record>
+    <record id="uom.product_uom_gram" model="uom.uom">
+        <field name="fbr_code">U1000059</field>
+    </record>
+    <record id="uom.product_uom_ton" model="uom.uom">
+        <field name="fbr_code">U1000003</field>
+    </record>
+    <record id="uom.product_uom_lb" model="uom.uom">
+        <field name="fbr_code">U1000065</field>
+    </record>
+    <record id="uom.product_uom_litre" model="uom.uom">
+        <field name="fbr_code">U1000009</field>
+    </record>
+    <record id="uom.product_uom_cubic_meter" model="uom.uom">
+        <field name="fbr_code">U1000055</field>
+    </record>
+    <record id="uom.product_uom_gal" model="uom.uom">
+        <field name="fbr_code">U1000061</field>
+    </record>
+    <record id="uom.product_uom_meter" model="uom.uom">
+        <field name="fbr_code">U1000048</field>
+    </record>
+    <record id="uom.product_uom_foot" model="uom.uom">
+        <field name="fbr_code">U1000083</field>
+    </record>
+    <record id="uom.uom_square_meter" model="uom.uom">
+        <field name="fbr_code">U1000077</field>
+    </record>
+    <record id="uom.uom_square_foot" model="uom.uom">
+        <field name="fbr_code">U1000075</field>
+    </record>
+    <record id="uom.product_uom_dozen" model="uom.uom">
+        <field name="fbr_code">U1000057</field>
+    </record>
+    <record id="uom.product_uom_unit" model="uom.uom">
+        <field name="fbr_code">U1000087</field>
+    </record>
+
+    <!-- New Units -->
+    <record id="uom_40kg" model="uom.uom">
+        <field name="name">40 Kilogram</field>
+        <field name="category_id" ref="uom.product_uom_categ_kgm"/>
+        <field name="uom_type">bigger</field>
+        <!-- <field name="factor_inv" eval="40.0"/> -->
+         <field name="factor_inv">40.0</field>
+        <field name="rounding" eval="0.000001"/>
+        <field name="fbr_code">U1000008</field>
+    </record>
+
+    <record id="uom_carat" model="uom.uom">
+        <field name="name">Carat</field>
+        <field name="category_id" ref="uom.product_uom_categ_kgm"/>
+        <field name="uom_type">smaller</field>
+        <field name="factor" eval="5000.0"/> <!-- 1 kg = 5000 carats -->
+        <field name="rounding" eval="0.000001"/>
+        <field name="fbr_code">U1000053</field>
+    </record>
+
+    <record id="uom_barrel" model="uom.uom">
+        <field name="name">Barrel (Oil)</field>
+        <field name="category_id" ref="uom.product_uom_categ_vol"/>
+        <field name="uom_type">bigger</field>
+        <field name="factor_inv" eval="0.1589872949"/>
+        <field name="rounding" eval="0.000001"/>
+        <field name="fbr_code">U1000085</field>
+    </record>
+
+    <record id="uom_square_yard" model="uom.uom">
+        <field name="name">Square Yard</field>
+        <field name="category_id" ref="uom.uom_categ_surface"/>
+        <field name="uom_type">smaller</field>
+        <field name="factor" eval="1.1959900463"/>
+        <field name="rounding" eval="0.000001"/>
+        <field name="fbr_code">U1000011</field>
+    </record>
+
+    <!-- Energy -->
+    <record id="uom_kwh" model="uom.uom">
+        <field name="name">Kilowatt-hour</field>
+        <field name="category_id" ref="uom_category_energy"/>
+        <field name="uom_type">reference</field>
+        <field name="factor" eval="1.0"/>
+        <field name="rounding" eval="0.000001"/>
+        <field name="fbr_code">U1000006</field>
+    </record>
+    <record id="uom_mmbtu" model="uom.uom">
+        <field name="name">MMBTU</field>
+        <field name="category_id" ref="uom_category_energy"/>
+        <field name="uom_type">bigger</field>
+        <field name="factor_inv" eval="293.07107"/>
+        <field name="rounding" eval="0.000001"/>
+        <field name="fbr_code">U1000046</field>
+    </record>
+
+    <!-- Power -->
+    <record id="uom_watt" model="uom.uom">
+        <field name="name">Watt</field>
+        <field name="category_id" ref="uom_category_power"/>
+        <field name="uom_type">reference</field>
+        <field name="factor" eval="1.0"/>
+        <field name="rounding" eval="0.000001"/>
+        <field name="fbr_code">U1000099</field>
+    </record>
+    <record id="uom_megawatt" model="uom.uom">
+        <field name="name">Megawatt</field>
+        <field name="category_id" ref="uom_category_power"/>
+        <field name="uom_type">bigger</field>
+        <field name="factor_inv" eval="1000000.0"/>
+        <field name="rounding" eval="0.000001"/>
+        <field name="fbr_code">U1000081</field>
+    </record>
+
+    <!-- Unit-based -->
+    <record id="uom_set" model="uom.uom">
+        <field name="name">Set</field>
+        <field name="category_id" ref="uom.product_uom_categ_unit"/>
+        <field name="uom_type">bigger</field>
+        <field name="factor_inv" eval="1.0"/>
+        <field name="rounding" eval="0.000001"/>
+        <field name="fbr_code">U1000005</field>
+    </record>
+    <record id="uom_pieces" model="uom.uom">
+        <field name="name">Pieces</field>
+        <field name="category_id" ref="uom.product_uom_categ_unit"/>
+        <field name="uom_type">bigger</field>
+        <field name="factor_inv" eval="1.0"/>
+        <field name="rounding" eval="0.000001"/>
+        <field name="fbr_code">U1000069</field>
+    </record>
+    <record id="uom_packs" model="uom.uom">
+        <field name="name">Pack</field>
+        <field name="category_id" ref="uom.product_uom_categ_unit"/>
+        <field name="uom_type">bigger</field>
+        <field name="factor_inv" eval="1.0"/>
+        <field name="rounding" eval="0.000001"/>
+        <field name="fbr_code">U1000071</field>
+    </record>
+    <record id="uom_pair" model="uom.uom">
+        <field name="name">Pair</field>
+        <field name="category_id" ref="uom.product_uom_categ_unit"/>
+        <field name="uom_type">bigger</field>
+        <field name="factor_inv" eval="2.0"/>
+        <field name="rounding" eval="0.000001"/>
+        <field name="fbr_code">U1000073</field>
+    </record>
+    <record id="uom_thousand_unit" model="uom.uom">
+        <field name="name">Thousand Unit</field>
+        <field name="category_id" ref="uom.product_uom_categ_unit"/>
+        <field name="uom_type">bigger</field>
+        <field name="factor_inv" eval="1000.0"/>
+        <field name="rounding" eval="0.000001"/>
+        <field name="fbr_code">U1000079</field>
+    </record>
+    <record id="uom_bag" model="uom.uom">
+        <field name="name">Bag</field>
+        <field name="category_id" ref="uom.product_uom_categ_unit"/>
+        <field name="uom_type">bigger</field>
+        <field name="factor_inv" eval="1.0"/>
+        <field name="rounding" eval="0.000001"/>
+        <field name="fbr_code">U1000012</field>
+    </record>
+    <record id="uom_timber_logs" model="uom.uom">
+        <field name="name">Timber Logs</field>
+        <field name="category_id" ref="uom.product_uom_categ_unit"/>
+        <field name="uom_type">bigger</field>
+        <field name="factor_inv" eval="1.0"/>
+        <field name="rounding" eval="0.000001"/>
+        <field name="fbr_code">U1000067</field>
+    </record>
+    <record id="uom_others" model="uom.uom">
+        <field name="name">Others</field>
+        <field name="category_id" ref="uom.product_uom_categ_unit"/>
+        <field name="uom_type">bigger</field>
+        <field name="factor_inv" eval="1.0"/>
+        <field name="rounding" eval="0.000001"/>
+        <field name="fbr_code">U1000088</field>
+    </record>
+
+</odoo>

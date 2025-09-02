@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <!-- Root menu -->
+  <menuitem id="menu_fbr_di_root" name="FBR Digital Invoicing" sequence="100"/>
+
+  <!-- Config submenu -->
+  <menuitem id="menu_fbr_di_config" name="Configuration" parent="menu_fbr_di_root" sequence="10" groups="base.group_system"/>
+
+  <!-- Action that opens our standalone form -->
+  <record id="action_fbr_di_settings" model="ir.actions.act_window">
+    <field name="name">FBR DI Settings</field>
+    <field name="res_model">res.config.settings</field>
+    <field name="view_mode">form</field>
+    <field name="view_id" ref="fbr_fbr_integration.view_res_config_settings_fbr_di_minimal"/>
+    <field name="target">current</field>
+    <field name="context">{}</field>
+  </record>
+
+  <!-- Settings menu -->
+  <menuitem id="menu_fbr_di_settings"
+            name="Settings"
+            parent="menu_fbr_di_config"
+            action="action_fbr_di_settings"
+            sequence="10"
+            groups="base.group_system"/>
+
+  <!-- Optional quick link -->
+  <menuitem id="menu_fbr_di_invoices"
+            name="Customer Invoices"
+            parent="menu_fbr_di_root"
+            action="account.action_move_out_invoice_type"
+            sequence="20"/>
+</odoo>
