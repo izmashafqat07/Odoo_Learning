@@ -5,10 +5,6 @@
         <field name="model">uom.uom</field>
         <field name="inherit_id" ref="uom.product_uom_form_view"/>
         <field name="arch" type="xml">
-            <!-- <field name="category_id" position="after">
-                <field name="fbr_code"/>
-            </field> -->
-
             <xpath expr="//group/field[@name='category_id']" position="after">
                 <field name="fbr_code"/>
             </xpath>
