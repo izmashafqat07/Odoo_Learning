@@ -20,6 +20,7 @@
                modifiers="{'invisible': [['fbr_status','=','not_sent']]}"
         />
       </xpath>
+      
 
       <!-- FBR page -->
       <xpath expr="//sheet/notebook" position="inside">

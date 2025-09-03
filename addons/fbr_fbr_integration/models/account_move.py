@@ -58,6 +58,8 @@ class AccountMove(models.Model):
         default="Unregistered",
         string="FBR Buyer Registration Type",
     )
+    
+    
 
     # ------------------- Payload builders -------------------
     def _di_header(self):
