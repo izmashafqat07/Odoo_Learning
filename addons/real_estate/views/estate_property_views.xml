@@ -15,7 +15,6 @@
                 <field name="selling_price"/>
                 <field name="bedrooms"/>
                 <field name="living_area"/>
-                <!-- NEW: total_area and best_price -->
                 <field name="total_area"/>
                 <field name="best_price"/>
                 <field name="state"/>
@@ -24,12 +23,28 @@
         </field>
     </record>
 
-    <!-- ========================= PROPERTY: FORM ========================= -->
+    <!-- ========================= PROPERTY: FORM (WITH BUTTONS) ========================= -->
     <record id="estate_property_view_form" model="ir.ui.view">
         <field name="name">estate.property.form</field>
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
             <form string="Property">
+                <header>
+                    <button name="action_set_cancel"
+                            type="object"
+                            string="Cancel"
+                            class="btn-secondary"
+                            modifiers="{'invisible': [('state','in',['cancelled','sold'])]}"/>
+                    <button name="action_set_sold"
+                            type="object"
+                            string="Sold"
+                            class="btn-primary"
+                            modifiers="{'invisible': [('state','in',['sold','cancelled'])]}"/>
+                    <field name="state"
+                           widget="statusbar"
+                           statusbar_visible="new,offer_received,offer_accepted,sold,cancelled"/>
+                </header>
+
                 <sheet>
                     <!-- Title -->
                     <h1>
@@ -51,6 +66,7 @@
                     </group>
 
                     <notebook>
+                        <!-- Description tab -->
                         <page string="Description">
                             <group>
                                 <field name="description"/>
@@ -59,7 +75,6 @@
                             <group>
                                 <field name="bedrooms"/>
                                 <field name="living_area" string="Living Area (sqm)"/>
-                                <!-- NEW: total_area shown read-only -->
                                 <field name="total_area" string="Total Area (sqm)" readonly="1"/>
                                 <field name="facades"/>
                             </group>
@@ -67,7 +82,6 @@
                             <group>
                                 <field name="garage"/>
                                 <field name="garden"/>
-                                <!-- Odoo 17/18: use modifiers JSON (not attrs) -->
                                 <field name="garden_area"
                                        string="Garden Area (sqm)"
                                        modifiers="{'invisible': [('garden', '=', False)]}"/>
@@ -76,26 +90,22 @@
                             </group>
                         </page>
 
-                        <page string="Sales">
-                            <group>
-                                <field name="salesperson_id"/>
-                                <field name="buyer_id"/>
-                                <!-- NEW: best_price shown read-only -->
-                                <field name="best_price" string="Best Offer" readonly="1"/>
-                            </group>
+                        <!-- OFFERS tab: Price, Partner, Status (no context) -->
+                        <page string="Offers">
+                            <field name="offer_ids">
+                                <list>
+                                    <field name="price"/>
+                                    <field name="partner_id"/>
+                                    <field name="status"/>
+                                </list>
+                            </field>
+                        </page>
 
-                            <!-- Offers grid (One2many) -->
-                            <group string="Offers">
-                                <field name="offer_ids">
-                                    <list>
-                                        <field name="price"/>
-                                        <field name="partner_id"/>
-                                        <field name="status"/>
-                                        <!-- NEW inside O2M list -->
-                                        <field name="validity"/>
-                                        <field name="date_deadline"/>
-                                    </list>
-                                </field>
+                        <!-- Other Info tab -->
+                        <page string="Other Info">
+                            <group>
+                                <field name="salesperson_id" string="Salesman"/>
+                                <field name="buyer_id" string="Buyer"/>
                             </group>
                         </page>
                     </notebook>
@@ -119,12 +129,10 @@
                 <field name="living_area"/>
                 <field name="garden"/>
 
-                <!-- Filter: Available (state in new/offer_received) -->
                 <filter name="available_props"
                         string="Available"
                         domain="['|', ('state', '=', 'new'), ('state', '=', 'offer_received')]"/>
 
-                <!-- Group By -->
                 <separator/>
                 <filter name="group_by_type"
                         string="Property Type"
@@ -190,7 +198,6 @@
         <field name="view_mode">list,form</field>
     </record>
 
-    <!-- Configuration menu for Types & Tags -->
     <menuitem id="estate_menu_configuration" name="Configuration" parent="estate_menu_root"/>
     <menuitem id="estate_menu_property_type"
               name="Property Types"
@@ -243,18 +250,15 @@
               parent="estate_menu_configuration"
               action="estate_property_tag_action"/>
 
-    <!-- ========================= OFFER: LIST/FORM (no action/menu) ========================= -->
+    <!-- ========================= OFFER: LIST/FORM (WITH BUTTONS) ========================= -->
     <record id="estate_property_offer_view_list" model="ir.ui.view">
         <field name="name">estate.property.offer.list</field>
         <field name="model">estate.property.offer</field>
         <field name="arch" type="xml">
-            <list string="Offers">
+            <list string="Offers" editable="bottom">
                 <field name="price"/>
                 <field name="partner_id"/>
                 <field name="status"/>
-                <!-- NEW -->
-                <field name="validity"/>
-                <field name="date_deadline"/>
             </list>
         </field>
     </record>
@@ -264,12 +268,23 @@
         <field name="model">estate.property.offer</field>
         <field name="arch" type="xml">
             <form string="Offer">
+                <header>
+                    <button name="action_accept"
+                            type="object"
+                            string="Accept"
+                            class="btn-primary"
+                            modifiers="{'invisible': [('status','=','accepted')]}"/>
+                    <button name="action_refuse"
+                            type="object"
+                            string="Refuse"
+                            class="btn-secondary"
+                            modifiers="{'invisible': [('status','=','refused')]}"/>
+                </header>
                 <sheet>
                     <group>
                         <field name="price" required="1"/>
                         <field name="partner_id" required="1"/>
-                        <field name="status"/>
-                        <!-- NEW -->
+                        <field name="status" readonly="1"/>
                         <field name="validity"/>
                         <field name="date_deadline"/>
                     </group>
