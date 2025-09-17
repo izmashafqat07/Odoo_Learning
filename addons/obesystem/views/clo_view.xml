@@ -19,6 +19,7 @@
                         <field name="description"/>
                         <field name="plo_ids" widget="many2many_tags"/>
                         <field name="course_id"/>
+                        <field name="taxonomy_level"/> <!-- Dropdown for taxonomy level -->
                     </group>
                 </sheet>
             </form>
@@ -32,6 +33,7 @@
             <list>
                 <field name="title"/>
                 <field name="description"/>
+                <field name="taxonomy_level"/> <!-- Display taxonomy level in list view -->
             </list>
         </field>
     </record>
