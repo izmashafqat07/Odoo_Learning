@@ -1,7 +1,7 @@
 # fbr_fbr_integration/__manifest__.py
 # -*- coding: utf-8 -*-
 {
-    "name": "FBR Digital Invoicing (PRAL) – Odoo 18",
+    "name": "FBR Digital Invoicing (PRAL) – Odoo 18 - version 1",
     "summary": (
         "Post customer invoices to FBR Digital Invoicing (PRAL): "
         "postinvoicedata with GST details, QR, and manual tax override."

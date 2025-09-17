@@ -16,6 +16,7 @@
                 class="oe_highlight"
                 modifiers="{'invisible': ['|', ['state','!=','posted'], ['move_type','not in', ['out_invoice','out_refund']]]}"
         />
+      
         <field name="fbr_status" widget="badge" readonly="1"
                modifiers="{'invisible': [['fbr_status','=','not_sent']]}"
         />

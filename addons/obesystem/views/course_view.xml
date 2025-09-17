@@ -1,0 +1,45 @@
+<odoo>
+    <!-- Define the action for Courses -->
+    <record id="action_course" model="ir.actions.act_window">
+        <field name="name">Courses</field>
+        <field name="res_model">obesystem.course</field>
+        <field name="view_mode">list,form</field>
+        <field name="help">Manage University Courses</field>
+    </record>
+
+    <!-- Define Course Views -->
+    <record id="view_course_form" model="ir.ui.view">
+        <field name="name">obesystem.course.form</field>
+        <field name="model">obesystem.course</field>
+        <field name="arch" type="xml">
+            <form string="University Course">
+                <sheet>
+                    <group>
+                        <field name="code"/>
+                        <field name="title"/>
+                        <field name="prereq_course_id"/>
+                        <field name="coreq_course_id"/>
+                        <field name="description"/>
+                        <field name="clo_ids" widget="many2many_tags"/>
+                        <field name="textbook_ids"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_course_list" model="ir.ui.view">
+        <field name="name">obesystem.course.list</field>
+        <field name="model">obesystem.course</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="code"/>
+                <field name="title"/>
+                <field name="description"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Menu Item for Courses -->
+    <menuitem id="menu_course" name="Courses" parent="menu_obesystem" action="action_course"/>
+</odoo>
