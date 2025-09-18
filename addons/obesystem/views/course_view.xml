@@ -68,12 +68,15 @@
                             </group>
                         </page>
                         
+                        <!-- CLOs Section - Add CLO Fields Here -->
                         <page string="CLOs">
                             <field name="clo_ids" mode="list">
                                 <list editable="bottom" string="Course Learning Outcomes">
-                                    <field name="title" string="Outcome Title"/>
-                                    <field name="taxonomy_level" string="Level"/>
+                                    <field name="title" string="CLO"/>
+                                    
                                     <field name="description" string="Description"/>
+                                    <field name="taxonomy_level" string="Level"/>
+                                    <field name="plo_id" string="Associated PLO"/>
                                 </list>
                             </field>
                         </page>

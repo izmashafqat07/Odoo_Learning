@@ -7,7 +7,8 @@ class CLO(models.Model):
     
     title = fields.Char('CLO Title', required=True)
     description = fields.Text('CLO Description')
-    plo_ids = fields.Many2many('obesystem.plo', string='Associated PLOs')
+    # Changed from Many2many to Many2one to allow only one PLO
+    plo_id = fields.Many2one('obesystem.plo', string='Associated PLO')
     course_id = fields.Many2one('obesystem.course', string='Course')
 
     TAXONOMY_SELECTION = [

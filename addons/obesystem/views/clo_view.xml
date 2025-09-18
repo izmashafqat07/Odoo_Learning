@@ -18,7 +18,8 @@
                 <field name="description" string="Description"/>
                 <field name="taxonomy_level" string="Taxonomy Level"/>
                 <field name="course_id" string="Course" widget="many2one"/>
-                <field name="plo_ids" string="Associated PLOs" widget="many2many_tags"/>
+                <!-- Changed from plo_ids to plo_id -->
+                <field name="plo_id" string="Associated PLO" widget="many2one"/>
             </list>
         </field>
     </record>
@@ -58,7 +59,8 @@
                         <page string="Mappings">
                             <group>
                                 <group string="PLO Mapping" col="12">
-                                    <field name="plo_ids" widget="many2many_tags" options="{'no_open': True}" placeholder="Select associated PLOs"/>
+                                    <!-- Changed from plo_ids to plo_id -->
+                                    <field name="plo_id" widget="many2one" options="{'no_open': True}" placeholder="Select associated PLO"/>
                                 </group>
                             </group>
                         </page>
@@ -77,6 +79,7 @@
                 <field name="title" string="CLO Title"/>
                 <field name="course_id" string="Course"/>
                 <field name="taxonomy_level" string="Taxonomy Level"/>
+                <field name="plo_id" string="Associated PLO"/>
                 <filter string="Knowledge Level" name="knowledge" domain="[('taxonomy_level','=','knowledge')]"/>
                 <filter string="Application Level" name="application" domain="[('taxonomy_level','=','application')]"/>
             </search>
