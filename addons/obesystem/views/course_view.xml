@@ -7,7 +7,7 @@
         <field name="help">Manage University Courses</field>
     </record>
 
-    <!-- Define Course Views -->
+    <!-- Define Course Form View -->
     <record id="view_course_form" model="ir.ui.view">
         <field name="name">obesystem.course.form</field>
         <field name="model">obesystem.course</field>
@@ -15,32 +15,94 @@
             <form string="University Course">
                 <sheet>
                     <group>
-                        <field name="code"/>
-                        <field name="title"/>
-                        <field name="prereq_course_id"/>
-                        <field name="coreq_course_id"/>
-                        <field name="description"/>
-                        <field name="clo_ids" widget="many2many_tags"/>
-                        <field name="textbook_ids"/>
+                        <group string="Course Information">
+                            <field name="code" required="1"/>
+                            <field name="title" required="1"/>
+                            <field name="description"/>
+                        </group>
+                        <group string="Course Requirements">
+                            <field name="prereq_course_id" widget="many2one" options="{'no_open': True}" string="Prerequisite Course"/>
+                            <field name="coreq_course_id" widget="many2one" options="{'no_open': True}" string="Co-requisite Course"/>
+                        </group>
                     </group>
+                    
+                    <notebook>
+                        <page string="Learning Outcomes">
+                            <field name="clo_ids" widget="many2many_tags" options="{'no_open': True}">
+                                <list>
+                                    <field name="title"/>
+                                    <field name="taxonomy_level"/>
+                                    <field name="description"/>
+                                </list>
+                                <form>
+                                    <field name="title"/>
+                                    <field name="taxonomy_level"/>
+                                    <field name="description"/>
+                                    <field name="plo_ids" widget="many2many_tags"/>
+                                </form>
+                            </field>
+                        </page>
+                        
+                        <page string="Textbooks">
+                            <field name="textbook_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="chapters"/>
+                                </list>
+                                <form>
+                                    <field name="name"/>
+                                    <field name="chapters"/>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>
     </record>
 
+    <!-- Define Course List View -->
     <record id="view_course_list" model="ir.ui.view">
-    <field name="name">obesystem.course.list</field>
-    <field name="model">obesystem.course</field>
-    <field name="arch" type="xml">
-        <list>
-            <field name="code"/>
-            <field name="title"/>
-            <field name="description"/>
-            <!-- Display name bhi show karein agar chahiye toh -->
-            <field name="display_name"/>
-        </list>
-    </field>
-</record>
+        <field name="name">obesystem.course.list</field>
+        <field name="model">obesystem.course</field>
+        <field name="arch" type="xml">
+            <list string="University Courses">
+                <field name="code" string="Course Code"/>
+                <field name="title" string="Course Title"/>
+                <field name="description" string="Description"/>
+                <field name="prereq_course_id" string="Prerequisite" widget="many2one"/>
+                <field name="coreq_course_id" string="Co-requisite" widget="many2one"/>
+                <field name="clo_ids" string="CLOs" widget="many2many_tags"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Define Course Search View -->
+    <record id="view_course_search" model="ir.ui.view">
+        <field name="name">obesystem.course.search</field>
+        <field name="model">obesystem.course</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="code" string="Course Code"/>
+                <field name="title" string="Course Title"/>
+                <filter string="Has Prerequisite" name="has_prereq" domain="[('prereq_course_id','!=',False)]"/>
+                <filter string="Has Co-requisite" name="has_coreq" domain="[('coreq_course_id','!=',False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="By Code" name="group_by_code" context="{'group_by':'code'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Update action to include search view -->
+    <record id="action_course" model="ir.actions.act_window">
+        <field name="name">Courses</field>
+        <field name="res_model">obesystem.course</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_course_list"/>
+        <field name="search_view_id" ref="view_course_search"/>
+        <field name="help">Manage University Courses</field>
+    </record>
 
     <!-- Menu Item for Courses -->
     <menuitem id="menu_course" name="Courses" parent="menu_obesystem" action="action_course"/>

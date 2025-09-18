@@ -7,7 +7,7 @@
         <field name="help">Manage Course Learning Outcomes</field>
     </record>
 
-    <!-- Define CLO Views -->
+    <!-- Define CLO Form View -->
     <record id="view_clo_form" model="ir.ui.view">
         <field name="name">obesystem.clo.form</field>
         <field name="model">obesystem.clo</field>
@@ -15,27 +15,64 @@
             <form string="Course Learning Outcome">
                 <sheet>
                     <group>
-                        <field name="title"/>
-                        <field name="description"/>
-                        <field name="plo_ids" widget="many2many_tags"/>
-                        <field name="course_id"/>
-                        <field name="taxonomy_level"/> <!-- Dropdown for taxonomy level -->
+                        <group string="CLO Information">
+                            <field name="title" required="1"/>
+                            <field name="description"/>
+                            <field name="taxonomy_level" required="1"/>
+                        </group>
+                        <group string="Mappings">
+                            <field name="course_id" widget="many2one" options="{'no_open': True}"/>
+                            <field name="plo_ids" widget="many2many_tags" options="{'no_open': True}"/>
+                        </group>
                     </group>
                 </sheet>
             </form>
         </field>
     </record>
 
+    <!-- Define CLO List View -->
     <record id="view_clo_list" model="ir.ui.view">
         <field name="name">obesystem.clo.list</field>
         <field name="model">obesystem.clo</field>
         <field name="arch" type="xml">
-            <list>
-                <field name="title"/>
-                <field name="description"/>
-                <field name="taxonomy_level"/> <!-- Display taxonomy level in list view -->
+            <list string="Course Learning Outcomes">
+                <field name="title" string="CLO Title"/>
+                <field name="description" string="Description"/>
+                <field name="taxonomy_level" string="Taxonomy Level"/>
+                <field name="course_id" string="Course" widget="many2one"/>
+                <field name="plo_ids" string="Associated PLOs" widget="many2many_tags"/>
             </list>
         </field>
+    </record>
+
+    <!-- Define CLO Search View -->
+    <record id="view_clo_search" model="ir.ui.view">
+        <field name="name">obesystem.clo.search</field>
+        <field name="model">obesystem.clo</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="title" string="CLO Title"/>
+                <field name="course_id" string="Course"/>
+                <field name="taxonomy_level" string="Taxonomy Level"/>
+                <filter string="Knowledge Level" name="knowledge" domain="[('taxonomy_level','=','knowledge')]"/>
+                <filter string="Application Level" name="application" domain="[('taxonomy_level','=','application')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Course" name="group_by_course" context="{'group_by':'course_id'}"/>
+                    <filter string="Taxonomy Level" name="group_by_taxonomy" context="{'group_by':'taxonomy_level'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Update action to include search view -->
+    <record id="action_clo" model="ir.actions.act_window">
+        <field name="name">CLOs</field>
+        <field name="res_model">obesystem.clo</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_clo_list"/>
+        <field name="search_view_id" ref="view_clo_search"/>
+        <field name="help">Manage Course Learning Outcomes</field>
+        <field name="context">{'search_default_group_by_course': 1}</field>
     </record>
 
     <!-- Menu Item for CLOs -->
