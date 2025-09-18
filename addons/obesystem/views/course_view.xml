@@ -29,16 +29,18 @@
     </record>
 
     <record id="view_course_list" model="ir.ui.view">
-        <field name="name">obesystem.course.list</field>
-        <field name="model">obesystem.course</field>
-        <field name="arch" type="xml">
-            <list>
-                <field name="code"/>
-                <field name="title"/>
-                <field name="description"/>
-            </list>
-        </field>
-    </record>
+    <field name="name">obesystem.course.list</field>
+    <field name="model">obesystem.course</field>
+    <field name="arch" type="xml">
+        <list>
+            <field name="code"/>
+            <field name="title"/>
+            <field name="description"/>
+            <!-- Display name bhi show karein agar chahiye toh -->
+            <field name="display_name"/>
+        </list>
+    </field>
+</record>
 
     <!-- Menu Item for Courses -->
     <menuitem id="menu_course" name="Courses" parent="menu_obesystem" action="action_course"/>

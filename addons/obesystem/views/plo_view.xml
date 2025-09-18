@@ -17,7 +17,8 @@
                     <group>
                         <field name="title"/>
                         <field name="description"/>
-                        <field name="peo_id" />
+                        <!-- Force refresh with explicit widget -->
+                        <field name="peo_id" widget="many2one" options="{'no_open': False}"/>
                     </group>
                 </sheet>
             </form>
@@ -31,10 +32,11 @@
             <list>
                 <field name="title"/>
                 <field name="description"/>
+                <field name="peo_id"/>
             </list>
         </field>
     </record>
-
+    
     <!-- Menu Items -->
     <menuitem id="menu_plo" name="PLOs" parent="menu_obesystem" action="action_plo"/>
 </odoo>
