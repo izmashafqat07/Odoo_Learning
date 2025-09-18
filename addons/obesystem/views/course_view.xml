@@ -15,8 +15,8 @@
             <list string="University Courses">
                 <field name="code" string="Course Code"/>
                 <field name="title" string="Course Title"/>
-                <field name="prereq_course_id" string="Prerequisite"/>
-                <field name="coreq_course_id" string="Co-requisite"/>
+                <field name="prereq_course_ids" string="Prerequisites"/>
+                <field name="coreq_course_ids" string="Co-requisites"/>
             </list>
         </field>
     </record>
@@ -44,29 +44,31 @@
                             <label for="description" string="Description"/>
                             <field name="description" placeholder="Enter course description..." nolabel="1"/>
                         </group>
-                        
-                        <group string="Course Requirements" col="6">
-                            <div class="row">
-                                <div class="col-6">
-                                    <label for="prereq_course_id" string="Prerequisite Course"/>
-                                    <field name="prereq_course_id" 
-                                        widget="many2one"
-                                        options="{'no_open': False, 'no_create': True}"
-                                        placeholder="Select prerequisite course"/>
-                                </div>
-                                <div class="col-6">
-                                    <label for="coreq_course_id" string="Co-requisite Course"/>
-                                    <field name="coreq_course_id" 
-                                        widget="many2one"
-                                        options="{'no_open': False, 'no_create': True}"
-                                        placeholder="Select co-requisite course"/>
-                                </div>
-                            </div>
-                        </group>
                     </group>
                     
                     <notebook>
-                        <page string="Learning Outcomes">
+                        <page string="Course Requirements">
+                            <group>
+                                <group string="Prerequisites &amp; Co-requisites" col="6">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label for="prereq_course_ids" string="Prerequisite Courses"/>
+                                            <field name="prereq_course_ids" 
+                                                widget="many2many_tags"
+                                                placeholder="Select prerequisite courses"/>
+                                        </div>
+                                        <div class="col-6">
+                                            <label for="coreq_course_ids" string="Co-requisite Courses"/>
+                                            <field name="coreq_course_ids" 
+                                                widget="many2many_tags"
+                                                placeholder="Select co-requisite courses"/>
+                                        </div>
+                                    </div>
+                                </group>
+                            </group>
+                        </page>
+                        
+                        <page string="CLOs">
                             <field name="clo_ids" mode="list">
                                 <list editable="bottom" string="Course Learning Outcomes">
                                     <field name="title" string="Outcome Title"/>
@@ -76,11 +78,21 @@
                             </field>
                         </page>
                         
-                        <page string="Textbooks &amp; Resources">
+                        <page string="Course Content">
+                            <group>
+                                <group string="Topics Covered" col="12">
+                                    <label for="description" string="Enter course topics (comma separated)"/>
+                                    <field name="course_content" 
+                                           placeholder="e.g., Introduction to Programming, Variables, Data Types, Control Structures" 
+                                           nolabel="1"/>
+                                </group>
+                            </group>
+                        </page>
+                        
+                        <page string="Textbooks">
                             <field name="textbook_ids" mode="list">
-                                <list editable="bottom" string="Required Textbooks">
+                                <list editable="bottom" string="Textbooks">
                                     <field name="name" string="Textbook Name"/>
-                                    <field name="chapters" string="Relevant Chapters"/>
                                 </list>
                             </field>
                         </page>

@@ -17,7 +17,7 @@
                     <group>
                         <field name="title"/>
                         <field name="description"/>
-                        <field name="plo_ids" widget="many2many_tags"/>
+                       
                     </group>
                 </sheet>
             </form>
