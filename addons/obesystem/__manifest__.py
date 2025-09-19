@@ -3,7 +3,7 @@
     'version': '1.0',
     'category': 'Education',
     'author': 'Izma Shafqat',
-    'website': 'https://yourwebsite.com',
+    # 'website': 'https://yourwebsite.com',
     'depends': ['base', 'web'],
     'data': [
         'security/ir.model.access.csv',
