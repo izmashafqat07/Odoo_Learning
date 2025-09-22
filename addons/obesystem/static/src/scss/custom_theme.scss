@@ -1,0 +1,99 @@
+// 🌈 Theme Colors
+$o-brand-primary: #2ecc71 !default;   // Green
+$o-brand-secondary: #3498db !default; // Blue
+$o-brand-odoo: #1abc9c !default;      // Teal
+
+// 🌐 Navbar
+.o_main_navbar {
+    background: linear-gradient(90deg, #2c3e50, #34495e) !important;
+    color: #ecf0f1 !important;
+    font-weight: bold;
+}
+
+// Navbar hover
+.o_main_navbar .o_menu_entry:hover {
+    background-color: #16a085 !important;
+    color: white !important;
+}
+
+// 📌 Sidebar (App Switcher)
+.o_apps {
+    background: #ecf0f1 !important;
+}
+.o_apps .o_app {
+    border-radius: 12px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+    transition: 0.3s;
+}
+.o_apps .o_app:hover {
+    transform: scale(1.05);
+    background: #1abc9c !important;
+    color: white !important;
+}
+
+// 🎨 Buttons
+.btn-primary {
+    background: #e74c3c !important; // Red button
+    border-radius: 25px !important;
+    font-size: 14px;
+    padding: 8px 18px;
+    font-weight: bold;
+}
+.btn-primary:hover {
+    background: #c0392b !important;
+}
+
+// "New" button styling
+.o_list_button_add {
+    border-radius: 50% !important;
+    width: 40px;
+    height: 40px;
+    background-color: #27ae60 !important;
+    font-size: 0 !important; /* Hide text */
+}
+.o_list_button_add::after {
+    content: "+";  /* Replace "New" with + icon */
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+    display: block;
+    text-align: center;
+    line-height: 38px;
+}
+
+// 📋 Kanban cards
+.o_kanban_record {
+    border-radius: 15px;
+    background: #ffffff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    padding: 10px;
+    transition: 0.2s;
+}
+.o_kanban_record:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+// 📑 List view header
+.o_list_view thead th {
+    background-color: #2ecc71 !important;
+    color: white !important;
+    font-weight: bold;
+}
+// Default Odoo purple replace
+$o-brand-odoo: #1abc9c !default;       // teal
+$o-enterprise-color: #27ae60 !default; // green
+$o-main-color: #3498db !default;       // blue
+
+// Sidebar menu highlight fix
+.o_menu_sidebar .o_menu_entry.active,
+.o_menu_sidebar .o_menu_entry:focus {
+    background-color: #27ae60 !important;
+    color: #fff !important;
+}
+
+// Top tab highlight (breadcrumb / submenus)
+.o_control_panel .o_cp_top {
+    background: #2c3e50 !important;
+    color: #fff !important;
+}
