@@ -11,5 +11,4 @@
     ],         # Only the base framework for now
     "application": True,          # <- This makes it show up under the 'Apps' filter
     "installable": True,
-    
 }
