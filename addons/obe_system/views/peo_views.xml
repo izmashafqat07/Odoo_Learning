@@ -8,7 +8,7 @@
         <field name="arch" type="xml">
             <list string="Program Educational Objectives" create="true" edit="false" delete="true">
                 <header>
-                    <!-- Buttons as header (no JS). Backend validates selection (>=2 and uniform). -->
+                    <!-- Backend validates (>=2 & uniform state) -->
                     <button name="action_publish_selected"
                             type="object"
                             string="Publish Selected"
@@ -24,6 +24,8 @@
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
                 <field name="title"/>
+                <field name="document_id"/>
+                <field name="document_note" optional="hide"/>
                 <field name="description" optional="show"/>
                 <field name="state" widget="badge"
                        decoration-success="state == 'published'"
@@ -61,9 +63,15 @@
                             <field name="sequence" readonly="state == 'published'"/>
                         </group>
                         <group>
-                            <field name="user_id" readonly="1"/>
-                            <field name="create_date" readonly="1"/>
-                            <field name="write_date" readonly="1"/>
+                            <!-- 👇 Yahan dono document fields ab sirf Unpublished me editable hain -->
+                            <field name="document_id"
+                                   readonly="state == 'published'"
+                                   domain="[('state','=','published')]"
+                                   options="{'no_create_edit': True, 'no_open': False}"
+                                   placeholder="Select a Published Document"/>
+                            <field name="document_note"
+                                   readonly="state == 'published'"
+                                   placeholder="Clause / Section (optional)"/>
                         </group>
                     </group>
                     <notebook>
@@ -84,6 +92,7 @@
             <search string="Search PEOs">
                 <field name="name" string="PEO Code"/>
                 <field name="title" string="Title"/>
+                <field name="document_id" string="Document"/>
                 <field name="description" string="Description"/>
                 <field name="user_id" string="Created by"/>
                 <filter string="Unpublished" name="draft" domain="[('state', '=', 'draft')]"/>
@@ -92,6 +101,7 @@
                 <filter string="My PEOs" name="my_peos" domain="[('user_id', '=', uid)]"/>
                 <group expand="0" string="Group By">
                     <filter string="Status" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="Document" name="group_document" context="{'group_by': 'document_id'}"/>
                     <filter string="Created by" name="group_user" context="{'group_by': 'user_id'}"/>
                     <filter string="Creation Date" name="group_create_date" context="{'group_by': 'create_date:month'}"/>
                 </group>

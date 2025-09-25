@@ -3,7 +3,6 @@ from lxml import etree
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError, AccessError
 
-
 class PEO(models.Model):
     _name = 'obe.peo'
     _description = 'Program Educational Objective'
@@ -22,6 +21,13 @@ class PEO(models.Model):
         [('draft', 'Unpublished'), ('published', 'Published')],
         string='Status', default='draft', tracking=True
     )
+
+    # Link to Document (used at publish time)
+    document_id = fields.Many2one(
+        'obe.document', string='Reference Document', tracking=True,
+        help="Under which document/policy this PEO falls"
+    )
+    document_note = fields.Char('Document Note / Clause', help="Optional clause/section reference")
 
     user_id = fields.Many2one('res.users', string='Created by',
                               default=lambda self: self.env.user, readonly=True)
@@ -82,6 +88,17 @@ class PEO(models.Model):
                 raise UserError(_("You cannot delete Published PEOs. Unpublish them first."))
         return super().unlink()
 
+    # ---------- document checks before publish ----------
+    def _check_document_before_publish(self):
+        missing = self.filtered(lambda r: not r.document_id)
+        if missing:
+            raise UserError(_("Please select a Reference Document before publishing.\nMissing on: %s")
+                            % ", ".join(missing.mapped('name')))
+        not_pub = self.filtered(lambda r: r.document_id.state != 'published')
+        if not_pub:
+            raise UserError(_("Reference Document must be Published before publishing PEOs.\nFix for: %s")
+                            % ", ".join(not_pub.mapped('name')))
+
     # ---------- bulk actions (buttons call these) ----------
     def _ensure_multi_selection(self):
         if len(self) < 2:
@@ -94,7 +111,14 @@ class PEO(models.Model):
         drafts = self.filtered(lambda r: r.state == 'draft')
         if len(drafts) != len(self):
             raise UserError(_("Only Unpublished records can be published. Select Unpublished only."))
+        drafts._check_document_before_publish()
+
         drafts.write({'state': 'published'})
+
+        # message_post must be singleton
+        for rec in drafts:
+            rec.message_post(body=_("PEO published under document: %s") % (rec.document_id.name or "-"))
+
         return {'type': 'ir.actions.client', 'tag': 'reload'}
 
     def action_unpublish_selected(self):
@@ -104,20 +128,30 @@ class PEO(models.Model):
         pubs = self.filtered(lambda r: r.state == 'published')
         if len(pubs) != len(self):
             raise UserError(_("Only Published records can be unpublished. Select Published only."))
+
         pubs.write({'state': 'draft'})
+
+        for rec in pubs:
+            rec.message_post(body=_("PEO unpublished."))
+
         return {'type': 'ir.actions.client', 'tag': 'reload'}
 
     # ---------- single record ----------
     def action_publish_single(self):
+        self.ensure_one()
         if self.state != 'draft':
             raise UserError(_("You can only publish Unpublished records."))
+        self._check_document_before_publish()
         self.write({'state': 'published'})
+        self.message_post(body=_("PEO published under document: %s") % (self.document_id.name,))
         return {'type': 'ir.actions.client', 'tag': 'reload'}
 
     def action_unpublish_single(self):
+        self.ensure_one()
         if self.state != 'published':
             raise UserError(_("You can only unpublish Published records."))
         self.write({'state': 'draft'})
+        self.message_post(body=_("PEO unpublished."))
         return {'type': 'ir.actions.client', 'tag': 'reload'}
 
     @api.constrains('title', 'description')

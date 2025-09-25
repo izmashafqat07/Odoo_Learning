@@ -2,10 +2,9 @@
 <odoo>
     <!-- Main Menu -->
     <menuitem id="menu_obe_main"
-              name="OBEE System"
-              sequence="90"
-              web_icon="obe_system,static/description/icon.png"/>
-    
+              name="OBE System"
+              sequence="90"/>
+
     <!-- PEO Sub Menu -->
     <menuitem id="menu_obe_peo"
               name="Program Educational Objectives"
@@ -19,4 +18,10 @@
               parent="menu_obe_main"
               sequence="90"/>
 
+    <!-- Documents -->
+    <menuitem id="menu_obe_documents"
+              name="Reference Documents"
+              parent="menu_obe_config"
+              action="action_obe_document"
+              sequence="5"/>
 </odoo>
