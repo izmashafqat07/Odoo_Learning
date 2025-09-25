@@ -10,11 +10,15 @@
         'views/plo_view.xml',
         'views/clo_view.xml',
         'views/course_view.xml',
+        
+     
     ],
     'assets': {
         'web.assets_backend': [
             'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
             'obesystem/static/src/scss/custom_theme.scss',
+            
+           
         ],
     },
     'installable': True,

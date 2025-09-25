@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Main Menu -->
+    <menuitem id="menu_obe_main"
+              name="OBEEE System"
+              sequence="90"
+              web_icon="obe_system,static/description/icon.png"/>
+    
+    <!-- PEO Sub Menu -->
+    <menuitem id="menu_obe_peo"
+              name="Program Educational Objectives"
+              parent="menu_obe_main"
+              action="action_peo"
+              sequence="10"/>
+
+    <!-- Configuration Menu -->
+    <menuitem id="menu_obe_config"
+              name="Configuration"
+              parent="menu_obe_main"
+              sequence="90"/>
+
+</odoo>
