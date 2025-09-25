@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <!-- LIST VIEW -->
     <record id="view_peo_list" model="ir.ui.view">
         <field name="name">obe.peo.list</field>
         <field name="model">obe.peo</field>
         <field name="arch" type="xml">
             <list string="Program Educational Objectives" create="true" edit="false" delete="true">
                 <header>
+                    <!-- Buttons as header (no JS). Backend validates selection (>=2 and uniform). -->
                     <button name="action_publish_selected"
                             type="object"
-                            string="Publish All"
-                            class="btn-primary oe_peo_btn_publish o_hidden"
-                            confirm="Publish all selected Unpublished PEOs?"/>
+                            string="Publish Selected"
+                            class="btn-primary"
+                            confirm="Publish selected Unpublished PEOs?"/>
                     <button name="action_unpublish_selected"
                             type="object"
-                            string="Unpublish All"
-                            class="btn-secondary oe_peo_btn_unpublish o_hidden"
-                            confirm="Unpublish all selected Published PEOs?"/>
+                            string="Unpublish Selected"
+                            class="btn-secondary"
+                            confirm="Unpublish selected Published PEOs?"/>
                 </header>
 
                 <field name="sequence" widget="handle"/>
@@ -32,6 +34,7 @@
         </field>
     </record>
 
+    <!-- FORM VIEW -->
     <record id="view_peo_form" model="ir.ui.view">
         <field name="name">obe.peo.form</field>
         <field name="model">obe.peo</field>
@@ -73,6 +76,7 @@
         </field>
     </record>
 
+    <!-- SEARCH VIEW -->
     <record id="view_peo_search" model="ir.ui.view">
         <field name="name">obe.peo.search</field>
         <field name="model">obe.peo</field>
@@ -95,6 +99,7 @@
         </field>
     </record>
 
+    <!-- ACTION WINDOW -->
     <record id="action_peo" model="ir.actions.act_window">
         <field name="name">Program Educational Objectives</field>
         <field name="res_model">obe.peo</field>

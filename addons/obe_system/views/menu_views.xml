@@ -2,7 +2,7 @@
 <odoo>
     <!-- Main Menu -->
     <menuitem id="menu_obe_main"
-              name="OBEEEeeee System"
+              name="OBEE System"
               sequence="90"
               web_icon="obe_system,static/description/icon.png"/>
     

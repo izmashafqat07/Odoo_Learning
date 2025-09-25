@@ -11,14 +11,10 @@
         'security/ir.model.access.csv',
         'data/sequence_data.xml',
         'views/peo_views.xml',
-        'views/peo_actions.xml',   # keep fallback actions available
+          # keep fallback actions available
         'views/menu_views.xml',
     ],
-    'assets': {
-        'web.assets_backend': [
-            'obe_system/static/src/js/peo_bulk_controls.js',  # <-- filename with "s"
-        ],
-    },
+    
     'installable': True,
     'application': True,
 }
