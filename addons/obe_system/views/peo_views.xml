@@ -1,27 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <!-- LIST / TREE VIEW -->
     <record id="view_peo_list" model="ir.ui.view">
         <field name="name">obe.peo.list</field>
         <field name="model">obe.peo</field>
         <field name="arch" type="xml">
-            <list string="Program Educational Objectives"
-                  create="true"
-                  edit="false"
-                  delete="true">
+            <list string="Program Educational Objectives" create="true" edit="false" delete="true">
                 <header>
-                    <!-- Bulk buttons (server enforces multi-selection-only) -->
                     <button name="action_publish_selected"
                             type="object"
-                            string="Publish"
-                            class="btn-primary"
-                            confirm="Publish selected Unpublished PEOs?"/>
+                            string="Publish All"
+                            class="btn-primary oe_peo_btn_publish o_hidden"
+                            confirm="Publish all selected Unpublished PEOs?"/>
                     <button name="action_unpublish_selected"
                             type="object"
-                            string="Unpublish"
-                            class="btn-secondary"
-                            confirm="Unpublish selected Published PEOs?"/>
+                            string="Unpublish All"
+                            class="btn-secondary oe_peo_btn_unpublish o_hidden"
+                            confirm="Unpublish all selected Published PEOs?"/>
                 </header>
 
                 <field name="sequence" widget="handle"/>
@@ -37,7 +32,6 @@
         </field>
     </record>
 
-    <!-- FORM VIEW -->
     <record id="view_peo_form" model="ir.ui.view">
         <field name="name">obe.peo.form</field>
         <field name="model">obe.peo</field>
@@ -48,15 +42,12 @@
                             type="object"
                             string="Publish"
                             class="btn-primary"
-                            invisible="state == 'published'"
-                            confirm="Publish this PEO?"/>
+                            invisible="state == 'published'"/>
                     <button name="action_unpublish_single"
                             type="object"
                             string="Unpublish"
                             class="btn-secondary"
-                            invisible="state == 'draft'"
-                            confirm="Unpublish this PEO?"/>
-                    <!-- Status bar shows labels from field (Unpublished/Published) -->
+                            invisible="state == 'draft'"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,published" readonly="1"/>
                 </header>
                 <sheet>
@@ -74,9 +65,7 @@
                     </group>
                     <notebook>
                         <page string="Description">
-                            <field name="description"
-                                   readonly="state == 'published'"
-                                   placeholder="Enter detailed description of the Program Educational Objective..."/>
+                            <field name="description" readonly="state == 'published'"/>
                         </page>
                     </notebook>
                 </sheet>
@@ -84,7 +73,6 @@
         </field>
     </record>
 
-    <!-- SEARCH VIEW -->
     <record id="view_peo_search" model="ir.ui.view">
         <field name="name">obe.peo.search</field>
         <field name="model">obe.peo</field>
@@ -107,7 +95,6 @@
         </field>
     </record>
 
-    <!-- ACTION WINDOW -->
     <record id="action_peo" model="ir.actions.act_window">
         <field name="name">Program Educational Objectives</field>
         <field name="res_model">obe.peo</field>
