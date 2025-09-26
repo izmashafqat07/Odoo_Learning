@@ -10,18 +10,16 @@
               name="Program Educational Objectives"
               parent="menu_obe_main"
               action="action_peo"
-              sequence="10"/>
+              sequence="5"/>
 
     <!-- Configuration Menu -->
-    <menuitem id="menu_obe_config"
-              name="Configuration"
-              parent="menu_obe_main"
-              sequence="90"/>
+   
 
     <!-- Documents -->
     <menuitem id="menu_obe_documents"
               name="Reference Documents"
-              parent="menu_obe_config"
+            
               action="action_obe_document"
-              sequence="5"/>
+                parent="menu_obe_main"
+              sequence="10"/>
 </odoo>
