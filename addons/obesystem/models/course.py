@@ -40,7 +40,7 @@ class Course(models.Model):
             elif course.title:
                 course.display_name = course.title
             else:
-                course.display_name = _("New Course")
+                course.display_name = _("New ")
 
     # Always return a non-empty label (prevents NewId_0x…)
     def name_get(self):
@@ -49,6 +49,7 @@ class Course(models.Model):
             if course.code and course.title:
                 label = f"{course.code} - {course.title}"
             else:
-                label = course.title or course.code or _("New Course")
+                label = course.title or course.code or _("New")
             res.append((course.id or 0, label))
+            
         return res

@@ -38,7 +38,7 @@ class PEO(models.Model):
             if peo.title:
                 peo.display_name = f"PEO ({peo.title})"
             else:
-                peo.display_name = _("New PEO")
+                peo.display_name = _("New ")
 
     # --- ALWAYS return a non-empty label (avoid NewId_0x...) ---
     def name_get(self):

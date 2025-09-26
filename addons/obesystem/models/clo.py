@@ -34,12 +34,12 @@ class CLO(models.Model):
     @api.depends('title')
     def _compute_display_name(self):
         for clo in self:
-            clo.display_name = f"CLO ({clo.title})" if clo.title else _("New CLO")
+            clo.display_name = f"CLO ({clo.title})" if clo.title else _("New ")
 
     # Always return a non-empty label (avoids NewId_0x…)
     def name_get(self):
         res = []
         for clo in self:
-            label = clo.title or _("New CLO")
+            label = clo.title or _("New ")
             res.append((clo.id or 0, label))
         return res

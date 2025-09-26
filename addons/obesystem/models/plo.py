@@ -17,12 +17,12 @@ class PLO(models.Model):
     @api.depends('title')
     def _compute_display_name(self):
         for plo in self:
-            plo.display_name = plo.title or _("New PLO")
+            plo.display_name = plo.title or _("New")
 
     # Always return a non-empty label (prevents NewId_0x…)
     def name_get(self):
         res = []
         for plo in self:
-            label = plo.title or _("New PLO")
+            label = plo.title or _("New ")
             res.append((plo.id or 0, label))
         return res
