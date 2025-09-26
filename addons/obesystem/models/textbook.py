@@ -3,7 +3,7 @@ from odoo import models, fields, api
 class Textbook(models.Model):
     _name = 'obesystem.textbook'
     _description = 'Textbook for Course'
-    _rec_name = 'display_name'
+    _rec_name = 'name'
     
     name = fields.Char('Textbook Name', required=True)
     course_id = fields.Many2one('obesystem.course', string='Course')

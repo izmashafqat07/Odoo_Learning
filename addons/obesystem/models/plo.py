@@ -3,7 +3,7 @@ from odoo import models, fields, api
 class PLO(models.Model):
     _name = 'obesystem.plo'
     _description = 'Program Learning Outcome'
-    _rec_name = 'display_name'
+    _rec_name = 'title'
     
     
     

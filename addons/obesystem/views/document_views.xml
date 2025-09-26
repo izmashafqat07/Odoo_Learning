@@ -67,6 +67,7 @@
           <filter string="Status" name="group_state" context="{'group_by':'state'}"/>
         </group>
       </search>
+      
     </field>
   </record>
 

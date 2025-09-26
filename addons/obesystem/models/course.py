@@ -3,7 +3,7 @@ from odoo import models, fields, api
 class Course(models.Model):
     _name = 'obesystem.course'
     _description = 'University Course'
-    _rec_name = 'display_name'
+    _rec_name = 'title'
     
     code = fields.Char('Course Code', required=True)
     title = fields.Char('Course Title', required=True)

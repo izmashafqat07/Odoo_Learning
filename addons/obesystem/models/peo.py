@@ -8,14 +8,13 @@ class PEO(models.Model):
     _name = 'obesystem.peo'
     _description = 'Program Educational Objective'
     _order = 'id desc'
-    _rec_name = 'display_name'
+    _rec_name = 'title'                      # header/breadcrumb will use title
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
-    # --- your existing fields ---
+    # --- fields ---
     title = fields.Char('PEO Title', required=True, tracking=True)
     description = fields.Text('PEO Description', required=True)
 
-    # --- NEW: workflow & referencing (needed for functionality) ---
     state = fields.Selection(
         [('draft', 'Unpublished'), ('published', 'Published')],
         string='Status', default='draft', tracking=True
@@ -29,19 +28,25 @@ class PEO(models.Model):
     user_id = fields.Many2one('res.users', string='Created by',
                               default=lambda self: self.env.user, readonly=True)
 
-    # --- computed display name (keep your style) ---
-    display_name = fields.Char(compute='_compute_display_name', store=True)
+    # --- display_name only for lists etc. (don't rely on id; available before save) ---
+    display_name = fields.Char(compute='_compute_display_name', store=False)
 
     @api.depends('title')
     def _compute_display_name(self):
         for peo in self:
-            if peo.title and not peo.title.strip().upper().startswith('PEO-'):
-                peo.display_name = f"PEO-{peo.id} ({peo.title})" if peo.id else peo.title
+            # No dependency on id; show a nice label even for new records
+            if peo.title:
+                peo.display_name = f"PEO ({peo.title})"
             else:
-                peo.display_name = peo.title or f"PEO-{peo.id}"
+                peo.display_name = _("New PEO")
 
+    # --- ALWAYS return a non-empty label (avoid NewId_0x...) ---
     def name_get(self):
-        return [(rec.id, rec.display_name) for rec in self]
+        res = []
+        for rec in self:
+            label = rec.title or _("New")
+            res.append((rec.id or 0, label))
+        return res
 
     # ---------- helpers ----------
     @api.model
@@ -79,7 +84,6 @@ class PEO(models.Model):
         return super().create(vals)
 
     def write(self, vals):
-        # lock edits when published (but allow state changes)
         for rec in self:
             if rec.state == 'published':
                 allowed = {'state', '__last_update'}
@@ -101,11 +105,11 @@ class PEO(models.Model):
         missing = self.filtered(lambda r: not r.document_id)
         if missing:
             raise UserError(_("Please select a Reference Document before publishing.\nMissing on: %s")
-                            % ", ".join(missing.mapped('display_name')))
+                            % ", ".join(missing.mapped('title')))
         not_pub = self.filtered(lambda r: r.document_id.state != 'published')
         if not_pub:
             raise UserError(_("Reference Document must be Published before publishing PEOs.\nFix for: %s")
-                            % ", ".join(not_pub.mapped('display_name')))
+                            % ", ".join(not_pub.mapped('title')))
 
     # ---------- bulk actions ----------
     def _ensure_multi_selection(self):
@@ -155,7 +159,7 @@ class PEO(models.Model):
         self.message_post(body=_("PEO unpublished."))
         return {'type': 'ir.actions.client', 'tag': 'reload'}
 
-    # ---------- UI attribute toggle (hide Create/Delete when all published) ----------
+    # ---------- UI attribute toggle ----------
     @api.model
     def fields_view_get(self, view_id=None, view_type='form', toolbar=False, submenu=False):
         res = super().fields_view_get(view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu)

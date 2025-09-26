@@ -1,13 +1,15 @@
-from odoo import models, fields, api
+# models/clo.py
+from odoo import models, fields, api, _
 
 class CLO(models.Model):
     _name = 'obesystem.clo'
     _description = 'Course Learning Outcome'
-    _rec_name = 'display_name'
-    
+    _rec_name = 'title'   # header/breadcrumb will use title
+
     title = fields.Char('CLO Title', required=True)
     description = fields.Text('CLO Description')
-    # Changed from Many2many to Many2one to allow only one PLO
+
+    # Only one PLO per CLO
     plo_id = fields.Many2one('obesystem.plo', string='Associated PLO')
     course_id = fields.Many2one('obesystem.course', string='Course')
 
@@ -25,22 +27,19 @@ class CLO(models.Model):
         required=True,
         default='knowledge'
     )
-    
-    display_name = fields.Char(compute='_compute_display_name', store=True)
-    
+
+    # id-independent, available before save
+    display_name = fields.Char(compute='_compute_display_name', store=False)
+
     @api.depends('title')
     def _compute_display_name(self):
         for clo in self:
-            # Check if title already contains "CLO-" format
-            if clo.title and clo.title.startswith('CLO-'):
-                clo.display_name = clo.title
-            elif clo.title:
-                clo.display_name = f"CLO-{clo.id} ({clo.title})"
-            else:
-                clo.display_name = f"CLO-{clo.id}"
-    
+            clo.display_name = f"CLO ({clo.title})" if clo.title else _("New CLO")
+
+    # Always return a non-empty label (avoids NewId_0x…)
     def name_get(self):
-        result = []
+        res = []
         for clo in self:
-            result.append((clo.id, clo.display_name))
-        return result
+            label = clo.title or _("New CLO")
+            res.append((clo.id or 0, label))
+        return res
