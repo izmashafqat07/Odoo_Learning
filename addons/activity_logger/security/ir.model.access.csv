@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_activity_session,access.activity.session,model_activity_session,base.group_system,1,0,0,0
+access_activity_request,access.activity.request,model_activity_request,base.group_system,1,0,0,0
+access_activity_change,access.activity.change,model_activity_change,base.group_system,1,0,0,0
+access_activity_field_change,access.activity.field.change,model_activity_field_change,base.group_system,1,0,0,0
+access_activity_report,access.activity.report,model_activity_report,base.group_system,1,0,0,0
+access_activity_rule,access.activity.rule,model_activity_rule,base.group_system,1,1,1,1
+
+
