@@ -1,7 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_peo_user,access_peo_user,model_obesystem_peo,,1,1,1,1
-access_plo_user,access_plo_user,model_obesystem_plo,,1,1,1,1
-access_clo_user,access_clo_user,model_obesystem_clo,,1,1,1,1
-access_course_user,access_course_user,model_obesystem_course,,1,1,1,1
-access_textbook_user,access_textbook_user,model_obesystem_textbook,,1,1,1,1
-access_obesystem_document_user,obesystem.document.user,model_obesystem_document,base.group_user,1,1,1,1
