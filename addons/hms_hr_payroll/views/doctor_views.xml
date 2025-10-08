@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hms_doctor_form_inherit_hr" model="ir.ui.view">
+        <field name="name">hms.base.doctor.form.inherit.hr</field>
+        <field name="model">hms.base.doctor</field>
+        <field name="inherit_id" ref="hms_base.view_hms_doctor_form"/>
+        <field name="arch" type="xml">
+            <!-- Parent view has no <header>, so create one BEFORE <sheet> -->
+            <xpath expr="//form/sheet" position="before">
+                <header>
+                    <button name="action_create_employee" type="object" class="oe_highlight">Create Employee</button>
+                </header>
+            </xpath>
+            <!-- Link field inside main group -->
+            <xpath expr="//form/sheet/group" position="inside">
+                <field name="employee_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

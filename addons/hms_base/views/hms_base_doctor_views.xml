@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="view_hms_doctor_form" model="ir.ui.view">
+        <field name="name">hms.doctor.form</field>
+        <field name="model">hms.base.doctor</field>
+        <field name="arch" type="xml">
+            <form string="Doctor">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="specialization"/>
+                        <field name="department_id"/>
+                    </group>
+                    <notebook>
+                        <page string="Patients">
+                            <field name="patient_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="dob"/>
+                                    <field name="gender"/>
+                                    <field name="emergency_contact"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hms_doctor_list" model="ir.ui.view">
+        <field name="name">hms.doctor.list</field>
+        <field name="model">hms.base.doctor</field>
+        <field name="arch" type="xml">
+            <list string="Doctors">
+                <field name="name"/>
+                <field name="specialization"/>
+                <field name="department_id"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_hms_doctor" model="ir.actions.act_window">
+        <field name="name">Doctors</field>
+        <field name="res_model">hms.base.doctor</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('is_doctor', '=', True)]</field>
+    </record>
+
+    <!-- Menu Item -->
+    <menuitem id="menu_hms_doctor" name="Doctors"
+              parent="menu_hms_base_root"/>
+    
+    <menuitem id="menu_hms_doctor" name="Doctors"
+              parent="menu_hms_base_root"/>
+
+    <menuitem id="menu_hms_doctor_doctor" name="Doctors"
+              parent="menu_hms_doctor"
+              action="action_hms_doctor"/>
+</odoo>

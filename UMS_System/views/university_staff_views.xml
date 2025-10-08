@@ -1,0 +1,63 @@
+<!-- views/university_staff_views.xml -->
+<odoo>
+    <record id="view_university_staff_list" model="ir.ui.view">
+        <field name="name">university.staff.list</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <list string="Staff">
+                <field name="name" />
+                <field name="department_id" />
+                <field name="employee_id" />
+                <field name="designation" />
+                <field name="staff_type_id" />
+                <field name="contract_type" />
+             
+            </list>
+        </field>
+    </record>
+
+    <record id="view_university_staff_form" model="ir.ui.view">
+        <field name="name">university.staff.form</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <form string="Staff">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="department_id" />
+                        <field name="employee_id" />
+                        <field name="designation" />
+                        <field name="staff_type_id" />
+                        <field name="hire_date" />
+                        <field name="job_grade" />
+                        <field name="contract_type" />
+                        <field name="work_email" />
+                        <field name="work_phone" />
+                        <field name="office_room" />
+                        <field name="specialization" />
+                        <field name="qualification" />
+                       
+                       
+                    </group>
+                </sheet>
+
+                <footer>
+                    <button name="action_open_user_form"
+                            type="object"
+                            string="Create User Account"
+                            class="btn-primary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_university_staff" model="ir.actions.act_window">
+        <field name="name">Staff</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('partner_type','=','staff')]</field>
+        <field name="view_id" ref="view_university_staff_list"/>
+        <field name="views" eval="[(ref('view_university_staff_list'),'list'),
+                                   (ref('view_university_staff_form'),'form')]"/>
+    </record>
+</odoo>

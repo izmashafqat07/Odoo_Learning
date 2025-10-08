@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Place Pharmacy under the existing HMS root menu from hms_base module -->
+    <menuitem id="menu_hms_pharmacy" name="Pharmacy" parent="hms_base.menu_hms_base_root" sequence="30"/>
+
+    <!-- Submenus -->
+    <menuitem id="menu_hms_pharmacy_medicines" name="Medicines" parent="menu_hms_pharmacy" action="action_hms_medicines" sequence="1"/>
+    <menuitem id="menu_hms_pharmacy_prescriptions" name="Prescriptions" parent="menu_hms_pharmacy" action="action_hms_prescriptions" sequence="2"/>
+</odoo>

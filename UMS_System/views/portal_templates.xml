@@ -1,0 +1,123 @@
+<odoo>
+  <!-- Replace entire /my/account form: show only Student Info; no default name/email/address -->
+  <template id="portal_my_details_student_only"
+            inherit_id="portal.portal_my_details"
+            name="Portal My Details - Student Only">
+    <xpath expr="//form" position="replace">
+      <form action="/my/account" method="post" class="o_portal_my_details_form">
+        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+        <t t-set="partner" t-value="request.env.user.partner_id"/>
+
+        <!-- HIDDEN core fields required by controller -->
+        <input type="hidden" name="country_id" t-att-value="partner.country_id.id or ''"/>
+        <input type="hidden" name="state_id" t-att-value="partner.state_id.id or ''"/>
+
+        <!-- Only students see/edit this -->
+        <t t-if="partner.partner_type == 'student'">
+          <div class="mt-4">
+            <h4>Student Information</h4>
+            <div class="row">
+
+              <!-- READ-ONLY: Enrollment & Roll (no name=..., so not posted) -->
+              <div class="col-md-4">
+                <label>Enrollment #</label>
+                <input class="form-control" type="text"
+                       t-att-value="partner.enrollment_number or ''" readonly="readonly"/>
+              </div>
+              <div class="col-md-4">
+                <label>Roll #</label>
+                <input class="form-control" type="text"
+                       t-att-value="partner.roll_number or ''" readonly="readonly"/>
+              </div>
+
+              <!-- Editable student fields -->
+              <div class="col-md-4">
+                <label>Program</label>
+                <input class="form-control" type="text" name="program"
+                       t-att-value="partner.program or ''" readonly="readonly"/>
+              </div>
+
+              <div class="col-md-4 mt-2">
+                <label>Batch/Year</label>
+                <input class="form-control" type="text" name="batch"
+                       t-att-value="partner.batch or ''" readonly="readonly"/>
+              </div>
+
+              <div class="col-md-4 mt-2">
+                <label>Admission Date</label>
+                <input class="form-control" type="date" name="admission_date"
+                       t-att-value="partner.admission_date" readonly="readonly"/>
+              </div>
+
+              <div class="col-md-4 mt-2">
+                <label>Date of Birth</label>
+                <input class="form-control" type="date" name="date_of_birth"
+                       t-att-value="partner.date_of_birth" readonly="readonly"/>
+              </div>
+
+              <div class="col-md-4 mt-2">
+                <label>Semester</label>
+                <input class="form-control" type="number" name="semester"
+                       t-att-value="partner.semester or ''" readonly="readonly"/>
+              </div>
+
+              <div class="col-md-4 mt-2">
+                <label>Section</label>
+                <input class="form-control" type="text" name="section"
+                       t-att-value="partner.section or ''" readonly="readonly"/>
+              </div>
+
+              <div class="col-md-4 mt-2">
+                <label>CGPA</label>
+                <input class="form-control" type="number" step="0.01" name="cgpa"
+                       t-att-value="partner.cgpa or ''" readonly="readonly"/>
+              </div>
+
+              <div class="col-md-4 mt-2">
+                <label>Status</label>
+                <select class="form-select" name="student_status">
+                  <option value="active"
+                          t-att-selected="partner.student_status == 'active' and 'selected' or None" readonly="readonly">Active</option>
+                  <option value="on_leave"
+                          t-att-selected="partner.student_status == 'on_leave' and 'selected' or None" readonly="readonly">On Leave</option>
+                  <option value="graduated"
+                          t-att-selected="partner.student_status == 'graduated' and 'selected' or None" readonly="readonly">Graduated</option>
+                  <option value="dropped"
+                          t-att-selected="partner.student_status == 'dropped' and 'selected' or None" readonly="readonly">Dropped</option>
+                </select>
+              </div>
+
+              <div class="col-md-4 mt-2">
+                <label>Guardian Name</label>
+                <input class="form-control" type="text" name="guardian_name"
+                       t-att-value="partner.guardian_name or ''" readonly="readonly"/>
+              </div>
+
+              <div class="col-md-4 mt-2">
+                <label>Guardian Phone</label>
+                <input class="form-control" type="text" name="guardian_phone"
+                       t-att-value="partner.guardian_phone or ''" readonly="readonly"/>
+              </div>
+
+              <div class="col-md-4 mt-2">
+                <label>Emergency Contact</label>
+                <input class="form-control" type="text" name="emergency_contact"
+                       t-att-value="partner.emergency_contact or ''" readonly="readonly"/>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Submit -->
+         
+        </t>
+
+        <t t-else="">
+          <div class="alert alert-info mt-3">
+            This page is available for students only.
+          </div>
+        </t>
+      </form>
+    </xpath>
+  </template>
+</odoo>

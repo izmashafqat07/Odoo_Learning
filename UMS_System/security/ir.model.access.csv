@@ -1,0 +1,27 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_obe_student_admin,obe.student.admin,model_obe_student,,1,1,1,1
+access_obe_student_coordinator,obe.student.coordinator,model_obe_student,,1,1,1,1
+access_obe_student_faculty,obe.student.faculty,model_obe_student,,1,0,0,0
+access_obe_student_student,obe.student.student,model_obe_student,,1,0,0,0
+
+access_obe_faculty_admin,obe.faculty.admin,model_obe_faculty,,1,1,1,1
+access_obe_faculty_coordinator,obe.faculty.coordinator,model_obe_faculty,,1,1,1,1
+access_obe_faculty_faculty,obe.faculty.faculty,model_obe_faculty,,1,0,0,0
+access_obe_faculty_student,obe.faculty.student,model_obe_faculty,,1,0,0,0
+
+access_obe_program_admin,obe.program.admin,model_obe_program,,1,1,1,1
+access_obe_program_coordinator,obe.program.coordinator,model_obe_program,,1,1,1,1
+access_obe_program_faculty,obe.program.faculty,model_obe_program,,1,0,0,0
+access_obe_program_student,obe.program.student,model_obe_program,,1,0,0,0
+
+access_obe_course_admin,obe.course.admin,model_obe_course,,1,1,1,1
+access_obe_course_coordinator,obe.course.coordinator,model_obe_course,,1,1,1,1
+access_obe_course_faculty,obe.course.faculty,model_obe_course,,1,0,0,0
+access_obe_course_student,obe.course.student,model_obe_course,,1,0,0,0
+
+access_university_staff_type_user,university.staff.type user,model_university_staff_type,base.group_user,1,0,0,0
+access_university_staff_type_manager,university.staff.type manager,model_university_staff_type,base.group_system,1,1,1,1
+access_university_department_user,university.department user,model_university_department,base.group_user,1,0,0,0
+access_university_department_manager,university.department manager,model_university_department,base.group_system,1,1,1,1
+
+access_website_public_umssystem,website.public.umssystem,website.model_website,base.group_public,1,0,0,0

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="seq_activity_session" model="ir.sequence">
+        <field name="name">Activity Session</field>
+        <field name="code">activity.session</field>
+        <field name="prefix">SESS/</field>
+        <field name="padding">6</field>
+        <field name="company_id" eval="False"/>
+    </record>
+</odoo>
+
+
