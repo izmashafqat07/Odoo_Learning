@@ -1,0 +1,330 @@
+// ==========================
+// GLOBAL THEME COLORS
+// ==========================
+:root {
+  --NavBar-backgroundColor: #0b2c4d;
+  --NavBar-entry-backgroundColor: #0b2c4d;
+  --NavBar-entry-hoverBackgroundColor: #16213e;
+  --NavBar-entry-hoverColor: #e94560;
+  --NavBar-entry-activeBackgroundColor: #e94560;
+  --NavBar-entry-activeColor: #ffffff;
+}
+
+$o-theme-color-main: #0b2c4d;
+$o-theme-color-hover: #144a80;
+$o-theme-color-text: #ffffff;
+
+// ==========================
+// NAVBAR
+// ==========================
+.o_main_navbar {
+    background-color: $o-theme-color-main !important;
+    border-bottom: 2px solid darken($o-theme-color-main, 10%);
+
+    .o_menu_brand {
+        color: $o-theme-color-text !important;
+        font-weight: bold;
+    }
+
+    a, .dropdown-toggle {
+        color: $o-theme-color-text !important;
+
+        &:hover {
+            background-color: $o-theme-color-hover !important;
+            color: $o-theme-color-text !important;
+        }
+    }
+}
+
+// ==========================
+// APP MENU (Sidebar / Tiles)
+// ==========================
+.o_app {
+    background: $o-theme-color-main !important;
+    color: $o-theme-color-text !important;
+    border-radius: 10px;
+    margin: 5px;
+
+    &:hover {
+        background: $o-theme-color-hover !important;
+        transform: scale(1.05);
+        transition: 0.3s;
+    }
+}
+
+// ==========================
+// BUTTONS
+// ==========================
+.btn-primary {
+    background-color: $o-theme-color-main !important;
+    border-color: $o-theme-color-main !important;
+    color: $o-theme-color-text !important;
+
+    &:hover {
+        background-color: $o-theme-color-hover !important;
+        border-color: $o-theme-color-hover !important;
+    }
+}
+
+// ==========================
+// CUSTOM NEW BUTTON (Round + Only Icon)
+// ==========================
+.o_list_button_add {
+    border-radius: 50% !important;
+    width: 40px !important;
+    height: 40px !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background-color: $o-theme-color-main !important;
+    border: none !important;
+    color: transparent !important;
+    position: relative;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    font-size: 0 !important;
+
+    // Hide all text content
+    span {
+        display: none !important;
+    }
+
+    // Add plus icon using CSS content
+    &::after {
+        content: "+" !important;
+        font-family: inherit !important;
+        font-size: 20px !important;
+        font-weight: bold;
+        color: $o-theme-color-text !important;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        line-height: 1;
+    }
+
+    &:hover {
+        background-color: $o-theme-color-hover !important;
+        transform: scale(1.1);
+    }
+}
+
+// For Kanban view new button
+.o-kanban-button-new {
+    @extend .o_list_button_add;
+    margin-bottom: 10px;
+}
+
+// For Form view create button  
+.o_form_button_create {
+    @extend .o_list_button_add;
+    margin-left: 10px;
+}
+
+// ==========================
+// SAVE & DISCARD BUTTONS STYLING
+// ==========================
+.o_form_status_indicator_buttons {
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    
+    .o_form_button_save,
+    .o_form_button_cancel {
+        width: 28px !important;
+        height: 28px !important;
+        padding: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border-radius: 4px !important;
+        transition: all 0.2s ease;
+        background-color: #f1f1f1 !important;
+
+        i {
+            font-size: 14px !important;
+        }
+
+        &:hover {
+            background-color: #e9ecef !important;
+            transform: scale(1.1);
+        }
+    }
+}
+
+// SAVE BUTTON ICON (Cloud → Floppy Disk)
+.o_form_button_save {
+    i {
+        &::before {
+            content: "\f0c7" !important; // Floppy disk icon
+            font-family: "FontAwesome" !important;
+            color: #28a745 !important;   // Green save
+        }
+    }
+}
+
+// DISCARD BUTTON ICON (X → Red Cross)
+.o_form_button_cancel {
+    i::before {
+        content: "\f00d" !important; // FontAwesome times icon
+        font-family: "FontAwesome" !important;
+        color: #dc3545 !important;
+    }
+
+    &:hover i::before {
+        color: #bd2130 !important;
+    }
+}
+
+
+// ==========================
+// ADDITIONAL BUTTON STYLING
+// ==========================
+// Ensure all buttons maintain consistency
+.btn {
+    border-radius: 6px !important;
+    transition: all 0.3s ease;
+    
+    &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+}
+
+// ==========================
+// FORM STYLING
+// ==========================
+.o_form_view {
+    background-color: #f9fafb !important;
+    border-radius: 10px;
+    padding: 15px;
+    
+    .o_form_sheet_bg {
+        background: white !important;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+}
+
+// ==========================
+// KANBAN STYLING
+// ==========================
+.o_kanban_view {
+    .o_kanban_record {
+        border-radius: 12px !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        
+        &:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transform: translateY(-2px);
+        }
+    }
+}
+
+// ==========================
+// LIST VIEW STYLING
+// ==========================
+.o_list_view {
+    .table {
+        border-radius: 10px;
+        overflow: hidden;
+        
+        thead {
+            background-color: $o-theme-color-main !important;
+            
+            th {
+                color: $o-theme-color-text !important;
+                border-color: darken($o-theme-color-main, 10%) !important;
+            }
+        }
+    }
+}
+.o_list_button_add{
+    border-radius: 50% important;
+}
+/* ===== Center the + on all create buttons (List/Kanban/Form) ===== */
+.o_list_button_add,
+.o-kanban-button-new,
+.o_form_button_create {
+  /* uniform round button */
+  border-radius: 50% !important;
+  width: 40px !important;
+  height: 40px !important;
+
+  /* center layout */
+  display: grid !important;
+  place-items: center !important;
+
+  /* ensure we control the content */
+  position: relative !important;
+  overflow: hidden;
+
+  /* hide any default text/icons Odoo injects */
+  font-size: 0 !important;      /* hides "New" text */
+  color: transparent !important; /* hides residual text color */
+  > i, .fa, .oi, span { display: none !important; }
+
+  /* draw our + and keep it centered */
+  &::after {
+    content: "+" !important;
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    color: $o-theme-color-text !important;
+    line-height: 1 !important;
+  }
+
+  /* colors / hover */
+  background-color: $o-theme-color-main !important;
+  border: none !important;
+  transition: transform .2s ease;
+  &:hover { background-color: $o-theme-color-hover !important; transform: scale(1.1); }
+}
+
+/* Fix small typo from earlier block to ensure round shape always applies */
+.o_list_button_add { border-radius: 50% !important; }
+
+/* (Optional) smaller size on mobile */
+@media (max-width: 768px) {
+  .o_list_button_add,
+  .o-kanban-button-new,
+  .o_form_button_create {
+    width: 35px !important;
+    height: 35px !important;
+    &::after { font-size: 16px !important; }
+  }
+}
+
+// ==========================
+// RESPONSIVE DESIGN
+// ==========================
+@media (max-width: 768px) {
+    .o_list_button_add,
+    .o-kanban-button-new,
+    .o_form_button_create {
+        width: 35px !important;
+        height: 35px !important;
+        
+        &::after {
+            font-size: 16px !important;
+        }
+    }
+    
+    .o_form_status_indicator_buttons {
+        .o_form_button_save,
+        .o_form_button_cancel {
+            width: 24px !important;
+            height: 24px !important;
+        }
+    }
+}
+/* Sirf list view ka "New" button: gol + khali */
+.o_list_button_add.btn {
+  border-radius: 50% !important;
+  width: 40px !important;
+  height: 40px !important;
+  padding: 0 !important;
+  font-size: 0 !important;   /* "New" text hide */
+}

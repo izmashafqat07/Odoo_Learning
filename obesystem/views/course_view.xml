@@ -1,0 +1,110 @@
+<odoo>
+    <!-- Define the action for Courses -->
+    <record id="action_course" model="ir.actions.act_window">
+        <field name="name">Courses</field>
+        <field name="res_model">obesystem.course</field>
+        <field name="view_mode">list,form</field>
+        <field name="help">Manage University Courses</field>
+    </record>
+
+    <!-- Define Course List View -->
+    <record id="view_course_list" model="ir.ui.view">
+        <field name="name">obesystem.course.list</field>
+        <field name="model">obesystem.course</field>
+        <field name="arch" type="xml">
+            <list string="University Courses">
+                <field name="code" string="Course Code"/>
+                <field name="title" string="Course Title"/>
+                <field name="prereq_course_ids" string="Prerequisites"/>
+                <field name="coreq_course_ids" string="Co-requisites"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Define Course Form View -->
+    <record id="view_course_form" model="ir.ui.view">
+        <field name="name">obesystem.course.form</field>
+        <field name="model">obesystem.course</field>
+        <field name="arch" type="xml">
+            <form string="Course Details">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="code" string="Course Code" class="oe_edit_only"/>
+                        <h1>
+                            <field name="code" required="1" placeholder="e.g., CS101" class="oe_inline"/>
+                        </h1>
+                        <label for="title" string="Course Title" class="oe_edit_only"/>
+                        <h2>
+                            <field name="title" required="1" placeholder="Enter course title"/>
+                        </h2>
+                    </div>
+                    
+                    <group>
+                        <group string="Course Details" col="6">
+                            <label for="description" string="Description"/>
+                            <field name="description" placeholder="Enter course description..." nolabel="1"/>
+                        </group>
+                    </group>
+                    
+                    <notebook>
+                        <page string="Course Requirements">
+                            <group>
+                                <group string="Prerequisites &amp; Co-requisites" col="6">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label for="prereq_course_ids" string="Prerequisite Courses"/>
+                                            <field name="prereq_course_ids" 
+                                                widget="many2many_tags"
+                                                placeholder="Select prerequisite courses"/>
+                                        </div>
+                                        <div class="col-6">
+                                            <label for="coreq_course_ids" string="Co-requisite Courses"/>
+                                            <field name="coreq_course_ids" 
+                                                widget="many2many_tags"
+                                                placeholder="Select co-requisite courses"/>
+                                        </div>
+                                    </div>
+                                </group>
+                            </group>
+                        </page>
+                        
+                        <!-- CLOs Section - Add CLO Fields Here -->
+                        <page string="CLOs">
+                            <field name="clo_ids" mode="list">
+                                <list editable="bottom" string="Course Learning Outcomes">
+                                    <field name="title" string="CLO"/>
+                                    
+                                    <field name="description" string="Description"/>
+                                    <field name="taxonomy_level" string="Level"/>
+                                    <field name="plo_id" string="Associated PLO"/>
+                                </list>
+                            </field>
+                        </page>
+                        
+                        <page string="Course Content">
+                            <group>
+                                <group string="Topics Covered" col="12">
+                                    <label for="description" string="Enter course topics (comma separated)"/>
+                                    <field name="course_content" 
+                                           placeholder="e.g., Introduction to Programming, Variables, Data Types, Control Structures" 
+                                           nolabel="1"/>
+                                </group>
+                            </group>
+                        </page>
+                        
+                        <page string="Textbooks">
+                            <field name="textbook_ids" mode="list">
+                                <list editable="bottom" string="Textbooks">
+                                    <field name="name" string="Textbook Name"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Menu Item for Courses -->
+    <menuitem id="menu_course" name="Courses" parent="menu_obesystem" action="action_course"/>
+</odoo>

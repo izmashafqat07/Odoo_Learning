@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- User Form View with Role Extension -->
+    <record id="view_users_form_obe" model="ir.ui.view">
+        <field name="name">res.users.form.obe</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <!-- More specific XPath to avoid issues -->
+            <xpath expr="//page[@name='access_rights']" position="after">
+                <page string="OBE Role Information">
+                    <group>
+                        <field name="role_type"/>
+                        <field name="faculty_id" invisible="role_type != 'faculty'"/>
+                        <field name="student_id" invisible="role_type != 'student'"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
